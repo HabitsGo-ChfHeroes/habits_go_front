@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'forum.dart';
+import 'screens/forum.dart';
 
 void main() {
   runApp(const MainApp());
