@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:habits_go_front/screens/login_screen.dart';
+import 'package:habits_go_front/screens/progress_screen.dart';
+import 'package:habits_go_front/screens/register_screen.dart';
+import 'package:habits_go_front/screens/splash_screen.dart';
 
 void main() {
   runApp(const MainApp());
@@ -11,22 +15,13 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-
-      // Use this section to set the screen while you are developing the app
-      // after you are done, comment this section, discard the changes here and uncomment the section below
-      /*
       initialRoute: "splash",
       routes: {
-        "splash": (context) => const SplashScreen()
+        "splash": (context) => const SplashScreen(),
+        "login": (context) => const LoginScreen(),
+        "register": (context) => const RegisterScreen(),
+        "progress": (context) => const ProgressScreen(),
       }
-      */
-
-      // Comment this section when you are done developing the app
-      home: const Scaffold(
-        body: Center(
-          child: Text("Hello World")
-        )
-      )
     );
   }
 }
