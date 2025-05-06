@@ -4,6 +4,8 @@ import 'package:habits_go_front/screens/progress_screen.dart';
 import 'package:habits_go_front/screens/register_screen.dart';
 import 'package:habits_go_front/screens/splash_screen.dart';
 
+import 'screens/forum.dart';
+
 void main() {
   runApp(const MainApp());
 }
