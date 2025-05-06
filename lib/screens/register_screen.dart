@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
-class RegisterPage extends StatefulWidget {
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
+
   @override
-  _RegisterState createState() => _RegisterState();
+  State<RegisterScreen> createState() => _RegisterState();
 }
 
-class _RegisterState extends State<RegisterPage> {
+class _RegisterState extends State<RegisterScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -88,7 +90,7 @@ class _RegisterState extends State<RegisterPage> {
                 suffixIcon: Icon(Icons.visibility_off),
               ),
             ),
-SizedBox(height: 20),
+            SizedBox(height: 20),
             // Campo de contraseña
             TextField(
               controller: _passwordController,
@@ -102,20 +104,12 @@ SizedBox(height: 20),
             ),            // Recuérdame y Olvidaste la Contraseña
             SizedBox(height: 20),
             // Botón de Iniciar Sesión
-            Container(
+            SizedBox(
               width:
                   double
                       .infinity, // Hace que el botón ocupe todo el ancho de la pantalla
               child: ElevatedButton(
                 onPressed: () {},
-                child: Text(
-                  'Registrarse',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(
                     0xFF226980,
@@ -129,6 +123,14 @@ SizedBox(height: 20),
                     ), // Bordes redondeados más suaves
                   ),
                   elevation: 5, // Sombra para dar un efecto más realista
+                ),
+                child: Text(
+                  'Registrarse',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),

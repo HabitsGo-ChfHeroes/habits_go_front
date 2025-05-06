@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:habits_go_front/screens/register_page.dart'; // Asegúrate de que la ruta sea correcta
+import 'package:habits_go_front/screens/register_screen.dart'; // Asegúrate de que la ruta sea correcta
 
-class LoginPage extends StatefulWidget {
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
   @override
-  _LoginPageState createState() => _LoginPageState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginScreenState extends State<LoginScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _rememberMe = false;
@@ -98,18 +100,10 @@ class _LoginPageState extends State<LoginPage> {
             ),
             SizedBox(height: 40),
             // Botón de Iniciar Sesión
-            Container(
+            SizedBox(
               width: double.infinity, // Hace que el botón ocupe todo el ancho de la pantalla
               child: ElevatedButton(
                 onPressed: () {},
-                child: Text(
-                  'Iniciar Sesión',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xFF226980), // Color de fondo del botón
                   padding: EdgeInsets.symmetric(vertical: 15), // Solo ajustamos el padding vertical
@@ -117,6 +111,14 @@ class _LoginPageState extends State<LoginPage> {
                     borderRadius: BorderRadius.circular(10), // Bordes redondeados más suaves
                   ),
                   elevation: 5, // Sombra para dar un efecto más realista
+                ),
+                child: Text(
+                  'Iniciar Sesión',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
@@ -190,7 +192,7 @@ class _LoginPageState extends State<LoginPage> {
     onPressed: () {
       Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => RegisterPage()),
+                  MaterialPageRoute(builder: (context) => RegisterScreen()),
                 );
     },
     child: RichText(
