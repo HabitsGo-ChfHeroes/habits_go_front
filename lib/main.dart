@@ -6,6 +6,7 @@ import 'package:habits_go_front/screens/progress_screen.dart';
 import 'package:habits_go_front/screens/register_screen.dart';
 import 'package:habits_go_front/screens/splash_screen.dart';
 import 'package:habits_go_front/screens/forum_coment_screen.dart';
+import 'package:habits_go_front/screens/user_imc_goal_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,6 +36,7 @@ class MainApp extends StatelessWidget {
             email: args["email"]!,
           );
         },
+        "user_imc_goal": (context) => const UserImcGoalPage(),
       }
     );
   }
