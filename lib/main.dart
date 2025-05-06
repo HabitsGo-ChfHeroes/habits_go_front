@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:habits_go_front/screens/forum_screen.dart';
 import 'package:habits_go_front/screens/login_screen.dart';
 import 'package:habits_go_front/screens/progress_screen.dart';
 import 'package:habits_go_front/screens/register_screen.dart';
 import 'package:habits_go_front/screens/splash_screen.dart';
-
-import 'screens/forum.dart';
+import 'package:habits_go_front/screens/forum_coment_screen.dart';
 
 void main() {
   runApp(const MainApp());
@@ -23,6 +23,15 @@ class MainApp extends StatelessWidget {
         "login": (context) => const LoginScreen(),
         "register": (context) => const RegisterScreen(),
         "progress": (context) => const ProgressScreen(),
+        "forum": (context) => const ForumScreen(),
+        "forum_coment": (context) {
+          final args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+          return ForumComentScreen(
+            name: args["name"]!,
+            description: args["description"]!,
+            email: args["email"]!,
+          );
+        },
       }
     );
   }

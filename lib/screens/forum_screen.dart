@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'forum-coment.dart';
 
-class ForumPage extends StatelessWidget {
-  const ForumPage({super.key});
+class ForumScreen extends StatelessWidget {
+  const ForumScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -139,15 +138,13 @@ class ForumPage extends StatelessWidget {
                       subtitle: Text("Foros publicados: ${user["posts"]}"),
                       trailing: ElevatedButton(
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ForumComentPage(
-                                name: user["name"],
-                                description: "Descripción extensa del usuario ${user["name"]}. Soy un firme defensor de los hábitos alimenticios saludables y conscientes. A lo largo de los últimos años, ha adoptado un estilo de vida equilibrado que combina una alimentación nutritiva con actividad física regular. Cree en la importancia de educarse sobre los alimentos que se consumen, priorizando productos naturales, integrales y bajos en procesamientos. Le apasiona investigar sobre nutrición funcional y cómo una dieta adecuada puede mejorar el bienestar físico y mental. Además, suele compartir recetas saludables y consejos prácticos con su entorno para fomentar una cultura de salud preventiva y sostenible.",
-                                email: "${user["name"].toLowerCase().replaceAll(" ", ".")}@ejemplo.com",
-                              ),
-                            ),
+                          Navigator.of(context).pushNamed(
+                            "forum_coment",
+                            arguments: {
+                              "name": user["name"],
+                              "description": "Descripción extensa del usuario ${user["name"]}. Soy un firme defensor de los hábitos alimenticios saludables y conscientes. A lo largo de los últimos años, ha adoptado un estilo de vida equilibrado que combina una alimentación nutritiva con actividad física regular. Cree en la importancia de educarse sobre los alimentos que se consumen, priorizando productos naturales, integrales y bajos en procesamientos. Le apasiona investigar sobre nutrición funcional y cómo una dieta adecuada puede mejorar el bienestar físico y mental. Además, suele compartir recetas saludables y consejos prácticos con su entorno para fomentar una cultura de salud preventiva y sostenible.",
+                              "email": "${user["name"].toLowerCase().replaceAll(" ", ".")}@ejemplo.com",
+                            },
                           );
                         },
                         style: ElevatedButton.styleFrom(

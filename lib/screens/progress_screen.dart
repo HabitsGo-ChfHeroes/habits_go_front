@@ -88,7 +88,9 @@ class ProgressScreen extends StatelessWidget {
                           shape: StadiumBorder(),
                           padding: EdgeInsets.symmetric(horizontal: 32, vertical: 14),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.of(context).pushNamed("forum");
+                        },
                         child: Text('Volver al plan', style: TextStyle(color: Colors.white)),
                       ),
                     )

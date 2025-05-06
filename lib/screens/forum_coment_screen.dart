@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class ForumComentPage extends StatelessWidget {
+class ForumComentScreen extends StatelessWidget {
   final String name;
   final String description;
   final String email;
 
-  const ForumComentPage({
+  const ForumComentScreen({
     super.key,
     required this.name,
     required this.description,
@@ -28,11 +28,14 @@ class ForumComentPage extends StatelessWidget {
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            const CircleAvatar(
-                radius: 60,
-                backgroundColor: Colors.grey,
-                backgroundImage: AssetImage("assets/gatowa.jpg")
-              //child: Icon(Icons.person, size: 60, color: Colors.white),
+            CircleAvatar(
+              radius: 60,
+              backgroundColor: Colors.grey,
+              backgroundImage: AssetImage(
+                name == "Rodrigo Raymundo"
+                    ? "assets/rodrigo_profile.png"
+                    : "assets/gatowa.jpg",
+              ),
             ),
             const SizedBox(height: 16),
             Text(
