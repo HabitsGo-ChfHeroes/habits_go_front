@@ -7,7 +7,7 @@ import 'package:habits_go_front/screens/register_screen.dart';
 import 'package:habits_go_front/screens/splash_screen.dart';
 import 'package:habits_go_front/screens/forum_coment_screen.dart';
 import 'package:habits_go_front/screens/user_imc_goal_page.dart';
-import 'user_settings.dart'; // Asegúrate de que la ruta sea correcta
+import 'screens/user_settings_screen.dart'; // Asegúrate de que la ruta sea correcta
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -38,7 +38,7 @@ class MainApp extends StatelessWidget {
           );
         },
         "user_imc_goal": (context) => const UserImcGoalPage(),
-        "settings": (context) => const UserSettingsScreen(),
+        "user_settings": (context) => const UserSettingsScreen(),
       }
     );
   }

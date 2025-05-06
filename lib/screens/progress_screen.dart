@@ -18,7 +18,9 @@ class ProgressScreen extends StatelessWidget {
         actions: [
           IconButton(
             icon: Icon(Icons.notifications, color: Colors.black),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).pushNamed("user_settings");
+            },
           ),
         ],
       ),
