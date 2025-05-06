@@ -109,7 +109,12 @@ class _RegisterState extends State<RegisterScreen> {
                   double
                       .infinity, // Hace que el botón ocupe todo el ancho de la pantalla
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                    "progress",
+                    (Route<dynamic> route) => false,
+                  );
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(
                     0xFF226980,

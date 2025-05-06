@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:habits_go_front/screens/register_screen.dart'; // Asegúrate de que la ruta sea correcta
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -103,7 +102,12 @@ class _LoginScreenState extends State<LoginScreen> {
             SizedBox(
               width: double.infinity, // Hace que el botón ocupe todo el ancho de la pantalla
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                    "progress",
+                    (Route<dynamic> route) => false,
+                  );
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xFF226980), // Color de fondo del botón
                   padding: EdgeInsets.symmetric(vertical: 15), // Solo ajustamos el padding vertical
@@ -124,31 +128,31 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             SizedBox(height: 60),
             Row(
-  children: [
-    Expanded(
-      child: Divider(
-        color: Colors.grey[400], // Color de la línea (gris claro)
-        thickness: 1, // Grosor de la línea
-      ),
-    ),
-    Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0), // Espaciado entre las líneas
-      child: Text(
-        'Iniciar sesión con',
-        style: TextStyle(
-          fontSize: 16, // Tamaño de fuente
-          color: Colors.grey[600], // Color gris suave
-        ),
-      ),
-    ),
-    Expanded(
-      child: Divider(
-        color: Colors.grey[400], // Color de la línea
-        thickness: 1, // Grosor de la línea
-      ),
-    ),
-  ],
-),
+              children: [
+                Expanded(
+                  child: Divider(
+                    color: Colors.grey[400], // Color de la línea (gris claro)
+                    thickness: 1, // Grosor de la línea
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0), // Espaciado entre las líneas
+                  child: Text(
+                    'Iniciar sesión con',
+                    style: TextStyle(
+                      fontSize: 16, // Tamaño de fuente
+                      color: Colors.grey[600], // Color gris suave
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Divider(
+                    color: Colors.grey[400], // Color de la línea
+                    thickness: 1, // Grosor de la línea
+                  ),
+                ),
+              ],
+            ),
             SizedBox(height: 10),
             // Iconos de inicio de sesión con Google, Facebook y Apple
             Row(
@@ -188,35 +192,31 @@ class _LoginScreenState extends State<LoginScreen> {
             SizedBox(height: 10),
             // Enlace para registro
             Center(
-  child: TextButton(
-    onPressed: () {
-      Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => RegisterScreen()),
-                );
-    },
-    child: RichText(
-      text: TextSpan(
-        text: 'Sin Cuenta? ', // Texto "Sin Cuenta?" en gris
-        style: TextStyle(
-          color: Colors.grey[600], // Gris
-          fontSize: 16, // Tamaño de fuente adecuado
-        ),
-        children: <TextSpan>[
-          TextSpan(
-            text: 'Regístrate Aquí', // Parte en color azul
-            style: TextStyle(
-              color: Color(0xFF226980), // Color azul
-              fontSize: 16, // Tamaño de fuente
-              fontWeight: FontWeight.bold, // Negrita para resaltar
-            ),
-          ),
-        ],
-      ),
-    ),
-  ),
-)
-
+              child: TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed("register");
+                },
+                child: RichText(
+                  text: TextSpan(
+                    text: 'Sin Cuenta? ', // Texto "Sin Cuenta?" en gris
+                    style: TextStyle(
+                      color: Colors.grey[600], // Gris
+                      fontSize: 16, // Tamaño de fuente adecuado
+                    ),
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: 'Regístrate Aquí', // Parte en color azul
+                        style: TextStyle(
+                          color: Color(0xFF226980), // Color azul
+                          fontSize: 16, // Tamaño de fuente
+                          fontWeight: FontWeight.bold, // Negrita para resaltar
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            )
           ],
         ),
       ),
