@@ -144,7 +144,7 @@ class ForumPage extends StatelessWidget {
                             MaterialPageRoute(
                               builder: (context) => ForumComentPage(
                                 name: user["name"],
-                                description: "Descripción extensa del usuario ${user["name"]}. Aquí puedes incluir biografía, intereses, actividad reciente y más detalles relevantes.",
+                                description: "Descripción extensa del usuario ${user["name"]}. Soy un firme defensor de los hábitos alimenticios saludables y conscientes. A lo largo de los últimos años, ha adoptado un estilo de vida equilibrado que combina una alimentación nutritiva con actividad física regular. Cree en la importancia de educarse sobre los alimentos que se consumen, priorizando productos naturales, integrales y bajos en procesamientos. Le apasiona investigar sobre nutrición funcional y cómo una dieta adecuada puede mejorar el bienestar físico y mental. Además, suele compartir recetas saludables y consejos prácticos con su entorno para fomentar una cultura de salud preventiva y sostenible.",
                                 email: "${user["name"].toLowerCase().replaceAll(" ", ".")}@ejemplo.com",
                               ),
                             ),
