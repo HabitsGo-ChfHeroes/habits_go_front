@@ -111,7 +111,7 @@ class _RegisterState extends State<RegisterScreen> {
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).pushNamedAndRemoveUntil(
-                    "progress",
+                    "user_imc_goal",
                     (Route<dynamic> route) => false,
                   );
                 },
