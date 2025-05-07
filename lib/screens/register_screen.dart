@@ -14,6 +14,7 @@ class _RegisterState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(
           'Registro',
@@ -110,10 +111,13 @@ class _RegisterState extends State<RegisterScreen> {
                       .infinity, // Hace que el botón ocupe todo el ancho de la pantalla
               child: ElevatedButton(
                 onPressed: () {
+                  /*
                   Navigator.of(context).pushNamedAndRemoveUntil(
                     "user_imc_goal",
                     (Route<dynamic> route) => false,
                   );
+                  */
+                  Navigator.of(context).pushNamed("user_imc_goal");
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(

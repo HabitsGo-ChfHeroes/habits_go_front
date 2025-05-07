@@ -15,6 +15,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(
           'Bienvenido!',
@@ -103,10 +104,13 @@ class _LoginScreenState extends State<LoginScreen> {
               width: double.infinity, // Hace que el botón ocupe todo el ancho de la pantalla
               child: ElevatedButton(
                 onPressed: () {
+                  /*
                   Navigator.of(context).pushNamedAndRemoveUntil(
                     "progress",
                     (Route<dynamic> route) => false,
                   );
+                  */
+                  Navigator.of(context).pushNamed("daily_plan");
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xFF226980), // Color de fondo del botón

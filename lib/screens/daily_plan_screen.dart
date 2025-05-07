@@ -21,10 +21,10 @@ class Meal {
 }
 
 class DailyPlanScreen extends StatefulWidget {
-  const DailyPlanScreen({Key? key}) : super(key: key);
+  const DailyPlanScreen({super.key});
 
   @override
-  _DailyPlanScreenState createState() => _DailyPlanScreenState();
+  State<DailyPlanScreen> createState() => _DailyPlanScreenState();
 }
 
 class _DailyPlanScreenState extends State<DailyPlanScreen> {
@@ -210,8 +210,7 @@ class MealItemCard extends StatelessWidget {
   final Meal meal;
   final VoidCallback onTap;
 
-  const MealItemCard({Key? key, required this.meal, required this.onTap})
-      : super(key: key);
+  const MealItemCard({super.key, required this.meal, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
