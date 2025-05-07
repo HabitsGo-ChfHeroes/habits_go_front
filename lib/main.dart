@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:habits_go_front/screens/daily-plan.dart';
 
 void main() {
   runApp(const MainApp());
@@ -22,6 +23,7 @@ class MainApp extends StatelessWidget {
       */
 
       // Comment this section when you are done developing the app
+            // Comment this section when you are done developing the app
       home: const Scaffold(
         body: Center(
           child: Text("Hello World")
