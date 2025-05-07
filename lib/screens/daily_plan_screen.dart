@@ -37,35 +37,35 @@ class _DailyPlanScreenState extends State<DailyPlanScreen> {
       dishName: 'Tazón de avena con plátano',
       ingredients: 'Avena, claras de huevo y rodajas de plátano',
       preparation: 'Mezcla 1 taza de avena con 3 claras y cocina a fuego medio. Añade rodajas de plátano encima.',
-      videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+      videoUrl: 'https://www.youtube.com/shorts/SMhf7YiN1h0',
     ),
     Meal(
       type: 'Media mañana',
       dishName: 'Yogur con frutos secos',
       ingredients: 'Yogur natural y mezcla de frutos secos',
       preparation: 'Sirve 1 vaso de yogur y añade una porción de frutos secos por encima.',
-      videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+      videoUrl: 'https://www.youtube.com/shorts/garw6-Ja-vo',
     ),
     Meal(
       type: 'Almuerzo',
       dishName: 'Pollo a la plancha con lentejas',
       ingredients: 'Pechuga de pollo, lentejas y arroz blanco',
       preparation: 'Cocina 150g de pechuga a la plancha, sirve con ½ taza de lentejas y ½ taza de arroz.',
-      videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+      videoUrl: 'https://www.youtube.com/shorts/whMSvJHvFwA',
     ),
     Meal(
       type: 'Merienda',
       dishName: 'Batido y tostada de aguacate',
       ingredients: 'Proteína en polvo, pan integral y aguacate',
       preparation: 'Prepara un batido con proteína y agua. Tuesta pan e unta aguacate.',
-      videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+      videoUrl: 'https://www.youtube.com/shorts/_1j3-Kl7YmE',
     ),
     Meal(
       type: 'Cena',
       dishName: 'Omelet de espinaca',
       ingredients: 'Huevos y espinacas frescas',
       preparation: 'Bate 2 huevos, añade espinacas y cocina el omelet en sartén antiadherente.',
-      videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+      videoUrl: 'https://www.youtube.com/watch?v=Q2U_3CcFjnk',
     ),
   ];
 
@@ -209,9 +209,10 @@ class _DailyPlanScreenState extends State<DailyPlanScreen> {
             onPressed: () async {
               final uri = Uri.parse(meal.videoUrl);
               if (await canLaunchUrl(uri)) {
-                await launchUrl(
-                  uri,
-                  mode: LaunchMode.externalApplication,
+                await launchUrl(uri, mode: LaunchMode.platformDefault);
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('No se pudo abrir el vídeo.'))
                 );
               }
             },
