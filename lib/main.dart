@@ -8,6 +8,7 @@ import 'package:habits_go_front/screens/splash_screen.dart';
 import 'package:habits_go_front/screens/forum_coment_screen.dart';
 import 'package:habits_go_front/screens/user_imc_goal_page.dart';
 import 'screens/user_settings_screen.dart'; // Asegúrate de que la ruta sea correcta
+import 'package:habits_go_front/screens/daily-plan.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
