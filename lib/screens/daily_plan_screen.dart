@@ -159,6 +159,28 @@ class _DailyPlanScreenState extends State<DailyPlanScreen> {
                     ),
                   ],
                 ),
+                const SizedBox(height: 16),
+
+                Center(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      foregroundColor: Colors.teal,
+                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(24),
+                      ),
+                    ),
+                    onPressed: () {
+                      // TODO: Navegar a pantalla de progreso
+                      Navigator.pushNamed(context, "progress");
+                    },
+                    child: const Text(
+                      "Visualizar progreso",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
