@@ -82,7 +82,7 @@ class _DailyPlanScreenState extends State<DailyPlanScreen> {
           IconButton(
             icon: const Icon(Icons.notifications),
             onPressed: () {
-              // TODO: Navegar a pantalla de notificaciones
+              Navigator.pushNamed(context, "alerts");
             },
           ),
         ],
@@ -172,7 +172,6 @@ class _DailyPlanScreenState extends State<DailyPlanScreen> {
                       ),
                     ),
                     onPressed: () {
-                      // TODO: Navegar a pantalla de progreso
                       Navigator.pushNamed(context, "progress");
                     },
                     child: const Text(

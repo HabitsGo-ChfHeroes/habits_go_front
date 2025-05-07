@@ -55,7 +55,9 @@ class _AlertsScreenState extends State<AlertsScreen> {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, "forum");
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF0D7377),
                     padding: const EdgeInsets.symmetric(vertical: 16),
@@ -63,7 +65,10 @@ class _AlertsScreenState extends State<AlertsScreen> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
-                  child: const Text("Ver foros", style: TextStyle(fontSize: 16)),
+                  child: const Text(
+                    "Ver foros", 
+                    style: TextStyle(fontSize: 16, color: Colors.white),
+                  ),
                 ),
               ),
             ],

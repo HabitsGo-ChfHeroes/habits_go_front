@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:habits_go_front/screens/alerts_screen.dart';
 import 'package:habits_go_front/screens/forum_screen.dart';
 import 'package:habits_go_front/screens/login_screen.dart';
 import 'package:habits_go_front/screens/progress_screen.dart';
@@ -9,7 +10,6 @@ import 'package:habits_go_front/screens/forum_coment_screen.dart';
 import 'package:habits_go_front/screens/user_imc_goal_page.dart';
 import 'package:habits_go_front/screens/user_settings_screen.dart';
 import 'package:habits_go_front/screens/daily_plan_screen.dart';
-import 'alerts.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
