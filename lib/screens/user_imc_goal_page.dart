@@ -274,10 +274,13 @@ class _UserImcGoalPageState extends State<UserImcGoalPage>
                     const SizedBox(height: 10),
                     ElevatedButton(
                       onPressed: selectedGoal != null ? () {
+                        /*
                         Navigator.of(context).pushNamedAndRemoveUntil(
                           "progress",
                           (Route<dynamic> route) => false,
                         );
+                        */
+                        Navigator.of(context).pushNamed("daily_plan");
                       } : null,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF003A79),

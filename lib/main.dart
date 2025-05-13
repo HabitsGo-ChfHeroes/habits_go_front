@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:habits_go_front/screens/alerts_screen.dart';
 import 'package:habits_go_front/screens/forum_screen.dart';
 import 'package:habits_go_front/screens/login_screen.dart';
 import 'package:habits_go_front/screens/progress_screen.dart';
@@ -7,7 +8,8 @@ import 'package:habits_go_front/screens/register_screen.dart';
 import 'package:habits_go_front/screens/splash_screen.dart';
 import 'package:habits_go_front/screens/forum_coment_screen.dart';
 import 'package:habits_go_front/screens/user_imc_goal_page.dart';
-import 'screens/user_settings_screen.dart'; // Asegúrate de que la ruta sea correcta
+import 'package:habits_go_front/screens/user_settings_screen.dart';
+import 'package:habits_go_front/screens/daily_plan_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,6 +41,8 @@ class MainApp extends StatelessWidget {
         },
         "user_imc_goal": (context) => const UserImcGoalPage(),
         "user_settings": (context) => const UserSettingsScreen(),
+        "daily_plan": (context) => const DailyPlanScreen(),
+        "alerts": (context) => const AlertsScreen(),
       }
     );
   }
