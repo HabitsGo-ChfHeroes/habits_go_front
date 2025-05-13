@@ -12,10 +12,11 @@ class _LoginScreenState extends State<LoginScreen> {
   final _passwordController = TextEditingController();
   bool _rememberMe = false;
 
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       backgroundColor: Colors.white,
       body: Center(  // Centra el contenido
         child: SingleChildScrollView(  // Envuelve el contenido en un SingleChildScrollView
