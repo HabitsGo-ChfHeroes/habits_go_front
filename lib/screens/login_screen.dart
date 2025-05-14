@@ -18,30 +18,29 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Center(  // Centra el contenido
-        child: SingleChildScrollView(  // Envuelve el contenido en un SingleChildScrollView
+      body: Center(  
+        child: SingleChildScrollView(  
           padding: const EdgeInsets.all(10.0),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,  // Centra verticalmente
-            crossAxisAlignment: CrossAxisAlignment.center,  // Centra horizontalmente
+            mainAxisAlignment: MainAxisAlignment.center,  
+            crossAxisAlignment: CrossAxisAlignment.center,  
             children: [
               Text(
           'Bienvenido!',
           style: TextStyle(
-            fontSize: 26, // Tamaño más grande
-            fontWeight: FontWeight.bold, // Negrita
+            fontSize: 26, 
+            fontWeight: FontWeight.bold, 
           ),
         ),
               Text(
                 'Inicia Sesión para Continuar',
                 style: TextStyle(
-                  fontSize: 16, // Tamaño pequeño
-                  fontWeight: FontWeight.w400, // No tan pesado como el título
-                  color: Colors.grey[700], // Gris suave
+                  fontSize: 16, 
+                  fontWeight: FontWeight.w400, 
+                  color: Colors.grey[700], 
                 ),
               ),
               SizedBox(height: 80),
-              // Campo de email
               TextField(
                 controller: _emailController,
                 decoration: InputDecoration(
@@ -51,7 +50,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               SizedBox(height: 20),
-              // Campo de contraseña
               TextField(
                 controller: _passwordController,
                 obscureText: true,
@@ -63,9 +61,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               SizedBox(height: 10),
-              // Recuérdame y Olvidaste la Contraseña
               Row(
-                mainAxisAlignment: MainAxisAlignment.start,  // Alineación a la izquierda
+                mainAxisAlignment: MainAxisAlignment.start,  
                 children: [
                   Checkbox(
                     value: _rememberMe,
@@ -78,8 +75,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   Text(
                     'Recuérdame',
                     style: TextStyle(
-                      fontWeight: FontWeight.bold, // Negrita
-                      color: Colors.black, // Color negro
+                      fontWeight: FontWeight.bold, 
+                      color: Colors.black, 
                     ),
                   ),
                   Spacer(),
@@ -88,17 +85,16 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Text(
                       'Olvidaste la Contraseña?',
                       style: TextStyle(
-                        fontWeight: FontWeight.bold, // Negrita
-                        color: Colors.black, // Color negro
+                        fontWeight: FontWeight.bold, 
+                        color: Colors.black, 
                       ),
                     ),
                   ),
                 ],
               ),
               SizedBox(height: 40),
-              // Botón de Iniciar Sesión
               SizedBox(
-                width: double.infinity, // Hace que el botón ocupe todo el ancho de la pantalla
+                width: double.infinity, 
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.of(context).pushNamedAndRemoveUntil(
@@ -107,12 +103,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF226980), // Color de fondo del botón
-                    padding: EdgeInsets.symmetric(vertical: 15), // Solo ajustamos el padding vertical
+                    backgroundColor: Color(0xFF226980), 
+                    padding: EdgeInsets.symmetric(vertical: 15), 
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10), // Bordes redondeados más suaves
+                      borderRadius: BorderRadius.circular(10), 
                     ),
-                    elevation: 5, // Sombra para dar un efecto más realista
+                    elevation: 5, 
                   ),
                   child: Text(
                     'Iniciar Sesión',
@@ -129,66 +125,61 @@ class _LoginScreenState extends State<LoginScreen> {
                 children: [
                   Expanded(
                     child: Divider(
-                      color: Color(0xFF2D2D2D), // Color de la línea (gris claro)
-                      thickness: 1, // Grosor de la línea
+                      color: Color(0xFF2D2D2D), 
+                      thickness: 1,
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0), // Espaciado entre las líneas
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0), 
                     child: Text(
                       'Iniciar sesión con',
                       style: TextStyle(
-                        fontSize: 16, // Tamaño de fuente
-                        color: Colors.grey[600], // Color gris suave
+                        fontSize: 16, 
+                        color: Colors.grey[600],
                       ),
                     ),
                   ),
                   Expanded(
                     child: Divider(
-                      color: Color(0xFF2D2D2D), // Color de la línea
-                      thickness: 1, // Grosor de la línea
+                      color: Color(0xFF2D2D2D), 
+                      thickness: 1, 
                     ),
                   ),
                 ],
               ),
               SizedBox(height: 10),
-              // Iconos de inicio de sesión con Google, Facebook y Apple
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // Google icon
                   IconButton(
                     icon: Image.asset(
                       'assets/google.png',
-                      width: 35,  // Ajusta el tamaño del icono
-                      height: 35, // Ajusta el tamaño del icono
+                      width: 35,  
+                      height: 35, 
                     ),
                     onPressed: () {},
                   ),
                   SizedBox(width: 30),
-                  // Facebook icon
                   IconButton(
                     icon: Image.asset(
                       'assets/facebook.png',
-                      width: 40,  // Ajusta el tamaño del icono
-                      height: 40, // Ajusta el tamaño del icono
+                      width: 40,  
+                      height: 40, 
                     ),
                     onPressed: () {},
                   ),
                   SizedBox(width: 30),
-                  // Apple icon
                   IconButton(
                     icon: Image.asset(
                       'assets/apple.png',
-                      width: 35,  // Ajusta el tamaño del icono
-                      height: 35, // Ajusta el tamaño del icono
+                      width: 35,  
+                      height: 35, 
                     ),
                     onPressed: () {},
                   ),
                 ],
               ),
               SizedBox(height: 60),
-              // Enlace para registro
               Center(
                 child: TextButton(
                   onPressed: () {
@@ -196,18 +187,18 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                   child: RichText(
                     text: TextSpan(
-                      text: 'Sin Cuenta? ', // Texto "Sin Cuenta?" en gris
+                      text: 'Sin Cuenta? ', 
                       style: TextStyle(
-                        color: Colors.grey[600], // Gris
-                        fontSize: 16, // Tamaño de fuente adecuado
+                        color: Colors.grey[600], 
+                        fontSize: 16, 
                       ),
                       children: <TextSpan>[
                         TextSpan(
-                          text: 'Regístrate Aquí', // Parte en color azul
+                          text: 'Regístrate Aquí', 
                           style: TextStyle(
-                            color: Color(0xFF226980), // Color azul
-                            fontSize: 16, // Tamaño de fuente
-                            fontWeight: FontWeight.bold, // Negrita para resaltar
+                            color: Color(0xFF226980), 
+                            fontSize: 16, 
+                            fontWeight: FontWeight.bold, 
                           ),
                         ),
                       ],
