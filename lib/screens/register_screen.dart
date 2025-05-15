@@ -109,10 +109,7 @@ class _RegisterState extends State<RegisterScreen> {
                 width: double.infinity,  
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                      "user_imc_goal",
-                      (Route<dynamic> route) => false,
-                    );
+                    Navigator.of(context).pushNamed("user_imc_goal");
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xFF226980), 

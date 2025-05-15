@@ -97,10 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 width: double.infinity, 
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                      "progress",
-                      (Route<dynamic> route) => false,
-                    );
+                    Navigator.of(context).pushNamed("daily_plan");
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xFF226980), 
