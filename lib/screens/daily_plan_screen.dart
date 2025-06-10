@@ -95,6 +95,12 @@ Widget build(BuildContext context) {
       ),
       actions: [
         IconButton(
+          icon: const Icon(Icons.person),
+          onPressed: () {
+            Navigator.pushNamed(context, "user_settings");
+          },
+        ),
+        IconButton(
           icon: const Icon(Icons.notifications),
           onPressed: () {
             Navigator.pushNamed(context, "alerts");

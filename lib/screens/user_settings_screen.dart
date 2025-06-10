@@ -13,12 +13,12 @@ class _UserSettingsScreenState extends State<UserSettingsScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFFF9FAFB),
       appBar: AppBar(
-        title: const Text("Edit Profile"),
+        title: const Text("Profile"),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
         ),
-        backgroundColor: Colors.teal,
+        backgroundColor: Color(0xFF226980),
         foregroundColor: Colors.white,
         elevation: 2,
       ),
@@ -27,7 +27,7 @@ class _UserSettingsScreenState extends State<UserSettingsScreen> {
           children: [
             // Header
             // Profile section
-            const SizedBox(height: 10),
+            const SizedBox(height: 25),
             Center(
               child: Column(
                 children: [
@@ -43,7 +43,7 @@ class _UserSettingsScreenState extends State<UserSettingsScreen> {
                         child: CircleAvatar(
                           radius: 15,
                           backgroundColor: Colors.white,
-                          child: Icon(Icons.edit, size: 18, color: Colors.blue),
+                          child: Icon(Icons.edit, size: 18, color: Color(0xFF226980)),
                         ),
                       ),
                     ],
@@ -79,7 +79,7 @@ class _UserSettingsScreenState extends State<UserSettingsScreen> {
                       SizedBox(height: 4),
                       Text(
                         "23,4   Tu IMC esta en un estado saludable",
-                        style: TextStyle(fontSize: 16, color: Colors.blueAccent),
+                        style: TextStyle(fontSize: 16, color: Color(0xFF226980)),
                       ),
                       Divider(height: 24),
                       Text("Objetivo Actual", style: TextStyle(color: Colors.grey)),
@@ -104,13 +104,19 @@ class _UserSettingsScreenState extends State<UserSettingsScreen> {
                 child: ElevatedButton.icon(
                   onPressed: () {},
                   icon: const Icon(Icons.edit),
-                  label: const Text("Editar Perfil"),
+                  label: const Text(
+                    "Editar Perfil",
+                    style: TextStyle(
+                      fontSize: 18,
+                    ),
+                  ),
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    backgroundColor: Colors.blue,
+                    backgroundColor: Color(0xFF226980),
+                    foregroundColor: Colors.white
                   ),
                 ),
               ),

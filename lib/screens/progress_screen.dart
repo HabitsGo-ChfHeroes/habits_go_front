@@ -22,6 +22,12 @@ class ProgressScreen extends StatelessWidget {
               Navigator.of(context).pushNamed("user_settings");
             },
           ),
+          IconButton(
+            icon: Icon(Icons.notifications, color: Colors.black),
+            onPressed: () {
+              Navigator.of(context).pushNamed("alerts");
+            },
+          ),
         ],
       ),
       body: Container(
