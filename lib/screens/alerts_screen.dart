@@ -12,25 +12,22 @@ class _AlertsScreenState extends State<AlertsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF9FAFB),
+      appBar: AppBar(
+        title: const Text('Notificaciones'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Navigator.pop(context),
+        ),
+        backgroundColor: Colors.teal,
+        foregroundColor: Colors.white,
+        elevation: 2,
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Encabezado
-              const Row(
-                children: [
-                  Icon(Icons.check_box_outline_blank),
-                  SizedBox(width: 10),
-                  Text(
-                    'Notificaciones',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-
               // Lista de notificaciones
               _buildNotificationTile(
                 icon: Icons.calendar_today,
@@ -66,7 +63,7 @@ class _AlertsScreenState extends State<AlertsScreen> {
                     ),
                   ),
                   child: const Text(
-                    "Ver foros", 
+                    "Ver foros",
                     style: TextStyle(fontSize: 16, color: Colors.white),
                   ),
                 ),
