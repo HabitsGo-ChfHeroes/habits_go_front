@@ -28,8 +28,6 @@ class DailyPlanScreen extends StatefulWidget {
 }
 
 class _DailyPlanScreenState extends State<DailyPlanScreen> {
-  bool _isCompleted = false;
-
   // Datos estáticos de ejemplo para cada comida
   static const List<Meal> meals = [
   Meal(
@@ -106,14 +104,7 @@ Widget build(BuildContext context) {
       padding: const EdgeInsets.all(16.0),
       child: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              Colors.teal.shade600,
-              Colors.teal.shade300,
-            ],
-          ),
+          color: Color(0xFF226980),
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
@@ -174,36 +165,15 @@ Widget build(BuildContext context) {
 
             const SizedBox(height: 24),
 
-            // Checkbox Meta cumplida
-            Row(
-              children: [
-                Checkbox(
-                  value: _isCompleted,
-                  onChanged: (value) {
-                    setState(() {
-                      _isCompleted = value ?? false;
-                    });
-                  },
-                ),
-                const SizedBox(width: 8),
-                const Text(
-                  'Meta cumplida',
-                  style: TextStyle(fontSize: 16, color: Colors.white),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-
             Center(
               child: ElevatedButton.icon(
                 icon: Icon(Icons.show_chart),
                 label: Text('Visualizar progreso'),
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(
-                      vertical: 14, horizontal: 32),
+                    vertical: 14, horizontal: 32),
                   shape: StadiumBorder(),
                   elevation: 6,
-                  shadowColor: Colors.teal.withOpacity(0.4),
                 ),
                 onPressed: () =>
                     Navigator.pushNamed(context, 'progress'),
