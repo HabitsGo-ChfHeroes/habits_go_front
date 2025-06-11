@@ -8,79 +8,76 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterState extends State<RegisterScreen> {
-    final _nombresController = TextEditingController();
-  final _apellidosController = TextEditingController();
-  final _emailController = TextEditingController();
-    final _telefonocontroller = TextEditingController();
-    final _direccioncontroller = TextEditingController();
+  final _usernameController       = TextEditingController();
+  final _emailController          = TextEditingController();
+  final _passwordController       = TextEditingController();
+  final _repeatPasswordController = TextEditingController();
 
-  final _passwordController = TextEditingController();
-  final _repeatpasswordController = TextEditingController();
+  String? _error;
+
+  void _submit() {
+    final username = _usernameController.text.trim();
+    final email    = _emailController.text.trim();
+    final pass     = _passwordController.text;
+    final repeat   = _repeatPasswordController.text;
+
+    // Validaciones
+    if (username.isEmpty || email.isEmpty || pass.isEmpty || repeat.isEmpty) {
+      setState(() => _error = 'Por favor completa todos los campos');
+      return;
+    }
+    if (pass != repeat) {
+      setState(() => _error = 'Las contraseñas no coinciden');
+      return;
+    }
+
+    // Limpio error y navego pasando los datos
+    setState(() => _error = null);
+    final registrationData = {
+      'username': username,
+      'email': email,
+      'password': pass,
+    };
+
+    Navigator.of(context).pushNamed(
+      'user_imc_goal',
+      arguments: registrationData,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       backgroundColor: Colors.white,
-
       body: Center(  
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(10.0),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center, 
+            mainAxisAlignment: MainAxisAlignment.center,  
+            crossAxisAlignment: CrossAxisAlignment.center,  
             children: [
-              SizedBox(height: 10),
-              TextField(
-                controller: _nombresController,
-                decoration: InputDecoration(
-                  labelText: 'Nombres',
-                  border: OutlineInputBorder(),
-                                      filled: true, 
-    fillColor: Colors.grey.shade200, 
-                ),
-              ),
               SizedBox(height: 20),
               TextField(
-                controller: _apellidosController,
+                controller: _usernameController,
                 decoration: InputDecoration(
-                  labelText: 'Apellidos',
+                  labelText: 'Nombre de usuario',
                   border: OutlineInputBorder(),
-                                      filled: true, 
-    fillColor: Colors.grey.shade200,  
+                  filled: true,
+                  fillColor: Colors.grey.shade200,
                 ),
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 16),
               TextField(
                 controller: _emailController,
                 decoration: InputDecoration(
                   labelText: 'Email',
                   border: OutlineInputBorder(),
-                                      filled: true, 
-    fillColor: Colors.grey.shade200,  
+                  filled: true,
+                  fillColor: Colors.grey.shade200,
                 ),
+                keyboardType: TextInputType.emailAddress,
               ),
-              SizedBox(height: 20),
-              TextField(
-                controller: _telefonocontroller,
-                decoration: InputDecoration(
-                  labelText: 'Teléfono',
-                  border: OutlineInputBorder(),
-                     filled: true,  
-    fillColor: Colors.grey.shade200, 
-                ),
-              ),
-              SizedBox(height: 20),
-              TextField(
-                controller: _direccioncontroller,
-                decoration: InputDecoration(
-                  labelText: 'Dirección',
-                  border: OutlineInputBorder(),
-                                      filled: true,  
-    fillColor: Colors.grey.shade200,  
-                ),
-              ),
-              SizedBox(height: 20),
+              SizedBox(height: 16),
               TextField(
                 controller: _passwordController,
                 obscureText: true,
@@ -88,36 +85,41 @@ class _RegisterState extends State<RegisterScreen> {
                   labelText: 'Contraseña',
                   border: OutlineInputBorder(),
                   suffixIcon: Icon(Icons.visibility_off),
-                                      filled: true,  
-    fillColor: Colors.grey.shade200,  
+                  filled: true,
+                  fillColor: Colors.grey.shade200,
                 ),
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 16),
               TextField(
-                controller: _repeatpasswordController,
+                controller: _repeatPasswordController,
                 obscureText: true,
                 decoration: InputDecoration(
-                  labelText: 'Contraseña',
+                  labelText: 'Repetir contraseña',
                   border: OutlineInputBorder(),
                   suffixIcon: Icon(Icons.visibility_off),
-                                      filled: true,  
-    fillColor: Colors.grey.shade200,  
+                  filled: true,
+                  fillColor: Colors.grey.shade200,
                 ),
               ),
-              SizedBox(height: 60),
+              if (_error != null) ...[
+                SizedBox(height: 12),
+                Text(
+                  _error!,
+                  style: TextStyle(color: Colors.red),
+                ),
+              ],
+              SizedBox(height: 32),
               SizedBox(
                 width: double.infinity,  
                 child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed("user_imc_goal");
-                  },
+                  onPressed: _submit,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF226980), 
-                    padding: EdgeInsets.symmetric(vertical: 15), 
+                    backgroundColor: Color(0xFF226980),
+                    padding: EdgeInsets.symmetric(vertical: 15),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10), 
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                    elevation: 5, 
+                    elevation: 5,
                   ),
                   child: Text(
                     'Registrarse',
@@ -129,7 +131,6 @@ class _RegisterState extends State<RegisterScreen> {
                   ),
                 ),
               ),
-              SizedBox(height: 10),
             ],
           ),
         ),

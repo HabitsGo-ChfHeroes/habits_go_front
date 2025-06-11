@@ -28,7 +28,9 @@ class DailyPlanScreen extends StatefulWidget {
 }
 
 class _DailyPlanScreenState extends State<DailyPlanScreen> {
+  List<bool> completedMeals = List.filled(meals.length, false);
   // Datos estáticos de ejemplo para cada comida
+
   static const List<Meal> meals = [
   Meal(
     type: 'Desayuno',
@@ -160,10 +162,12 @@ Widget build(BuildContext context) {
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Column(
-                children: meals.map((meal) {
+                children: meals.asMap().entries.map((entry) {
+                  final index = entry.key;
+                  final meal = entry.value;
                   return MealItemCard(
                     meal: meal,
-                    onTap: () => _showMealDialog(context, meal),
+                    onTap: () => _showMealDialog(context, meal, index),
                   );
                 }).toList(),
               ),
@@ -193,48 +197,81 @@ Widget build(BuildContext context) {
 }
 
 
-  void _showMealDialog(BuildContext context, Meal meal) {
-showDialog(
-  context: context,
-  builder: (_) => Dialog(
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-    elevation: 16,
-    insetPadding: EdgeInsets.symmetric(horizontal: 32, vertical: 24),
-    child: Padding(
-      padding: const EdgeInsets.all(20),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text('${meal.type}: ${meal.dishName}',
-            style: GoogleFonts.poppins(
-              fontSize: 20, fontWeight: FontWeight.bold
-            )),
-          const SizedBox(height: 12),
-          Text('Ingredientes:\n${meal.ingredients}',
-            style: GoogleFonts.poppins()),
-          const SizedBox(height: 12),
-          Text('Preparación:\n${meal.preparation}',
-            style: GoogleFonts.poppins()),
-          const SizedBox(height: 16),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              TextButton(
-                onPressed: () => launchUrl(Uri.parse(meal.videoUrl)),
-                child: Text('Ver video'),
+  void _showMealDialog(BuildContext context, Meal meal, int index) {
+    showDialog(
+      context: context,
+      builder: (_) {
+        bool isCompleted = completedMeals[index];
+
+        return StatefulBuilder(
+          builder: (context, setState) => Dialog(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+            elevation: 16,
+            insetPadding: const EdgeInsets.symmetric(horizontal: 32, vertical: 24),
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('${meal.type}: ${meal.dishName}',
+                      style: GoogleFonts.poppins(
+                          fontSize: 20, fontWeight: FontWeight.bold)),
+                  const SizedBox(height: 12),
+                  Text('Ingredientes:\n${meal.ingredients}',
+                      style: GoogleFonts.poppins()),
+                  const SizedBox(height: 12),
+                  Text('Preparación:\n${meal.preparation}',
+                      style: GoogleFonts.poppins()),
+                  const SizedBox(height: 16),
+
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        isCompleted = !isCompleted;
+                        completedMeals[index] = isCompleted;
+                      });
+                    },
+                    child: Text(isCompleted
+                        ? 'Desmarcar comida'
+                        : 'Marcar comida completada'),
+                  ),
+
+                  const SizedBox(height: 8),
+
+                  Text(
+                    isCompleted
+                        ? '✅ Esta comida está completada'
+                        : '❌ Esta comida no está completada',
+                    style: TextStyle(
+                      color: isCompleted ? Colors.green : Colors.red,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+
+                  const SizedBox(height: 16),
+
+                  // Botones inferiores
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      TextButton(
+                        onPressed: () => launchUrl(Uri.parse(meal.videoUrl)),
+                        child: const Text('Ver video'),
+                      ),
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: const Text('Cerrar'),
+                      ),
+                    ],
+                  ),
+                ],
               ),
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: Text('Cerrar'),
-              ),
-            ],
-          )
-        ],
-      ),
-    ),
-  ),
-);
+            ),
+          ),
+        );
+      },
+    );
   }
 }
 
