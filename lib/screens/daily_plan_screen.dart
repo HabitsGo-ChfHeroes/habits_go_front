@@ -28,8 +28,8 @@ class DailyPlanScreen extends StatefulWidget {
 }
 
 class _DailyPlanScreenState extends State<DailyPlanScreen> {
+  List<bool> completedMeals = List.filled(meals.length, false);
   // Datos estáticos de ejemplo para cada comida
-  Set<int> completedMeals = {};
 
   static const List<Meal> meals = [
   Meal(
@@ -201,12 +201,13 @@ Widget build(BuildContext context) {
     showDialog(
       context: context,
       builder: (_) {
-        bool isCompleted = completedMeals.contains(index);
-        return StatefulBuilder( // Importante para manejar estado local del diálogo
+        bool isCompleted = completedMeals[index];
+
+        return StatefulBuilder(
           builder: (context, setState) => Dialog(
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
             elevation: 16,
-            insetPadding: EdgeInsets.symmetric(horizontal: 32, vertical: 24),
+            insetPadding: const EdgeInsets.symmetric(horizontal: 32, vertical: 24),
             child: Padding(
               padding: const EdgeInsets.all(20),
               child: Column(
@@ -224,42 +225,46 @@ Widget build(BuildContext context) {
                       style: GoogleFonts.poppins()),
                   const SizedBox(height: 16),
 
-                  Row(
-                    children: [
-                      Checkbox(
-                        value: isCompleted,
-                        activeColor: Theme.of(context).primaryColor,
-                        onChanged: (value) {
-                          setState(() {
-                            isCompleted = value ?? false;
-                          });
-                          this.setState(() {
-                            if (value == true) {
-                              completedMeals.add(index);
-                            } else {
-                              completedMeals.remove(index);
-                            }
-                          });
-                        },
-                      ),
-                      Text("Comida completada", style: GoogleFonts.poppins())
-                    ],
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        isCompleted = !isCompleted;
+                        completedMeals[index] = isCompleted;
+                      });
+                    },
+                    child: Text(isCompleted
+                        ? 'Desmarcar comida'
+                        : 'Marcar comida completada'),
                   ),
 
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 8),
+
+                  Text(
+                    isCompleted
+                        ? '✅ Esta comida está completada'
+                        : '❌ Esta comida no está completada',
+                    style: TextStyle(
+                      color: isCompleted ? Colors.green : Colors.red,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+
+                  const SizedBox(height: 16),
+
+                  // Botones inferiores
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       TextButton(
                         onPressed: () => launchUrl(Uri.parse(meal.videoUrl)),
-                        child: Text('Ver video'),
+                        child: const Text('Ver video'),
                       ),
                       TextButton(
                         onPressed: () => Navigator.pop(context),
-                        child: Text('Cerrar'),
+                        child: const Text('Cerrar'),
                       ),
                     ],
-                  )
+                  ),
                 ],
               ),
             ),
