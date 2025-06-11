@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../services/auth_service.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -12,7 +13,48 @@ class _LoginScreenState extends State<LoginScreen> {
   final _passwordController = TextEditingController();
   bool _rememberMe = false;
 
+  final _authService = AuthService();
+  bool _loading = false;
+  String? _error;
 
+  Future<void> _submit() async {
+    final email = _emailController.text.trim();
+    final pass = _passwordController.text;
+  
+    // Validación de campos vacíos
+    if (email.isEmpty || pass.isEmpty) {
+      setState(() {
+        _error = 'Por favor ingresa email y contraseña';
+      });
+      return;
+    }
+  
+    setState(() {
+      _loading = true;
+      _error = null;
+    });
+  
+    try {
+      final success = await _authService.login(email, pass);
+      if (success) {
+        Navigator.of(context).pushReplacementNamed("daily_plan");
+      } else {
+        setState(() {
+          _error = 'Credenciales inválidas';
+        });
+      }
+    } catch (e) {
+      // Aquí puedes afinar según el tipo de error (SocketException, Timeout, etc.)
+      setState(() {
+        _error = 'Error de conexión. Intenta nuevamente.';
+      });
+    } finally {
+      // Esto garantiza que el indicador de carga desaparezca siempre
+      setState(() {
+        _loading = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,6 +102,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   suffixIcon: Icon(Icons.visibility_off),
                 ),
               ),
+              if (_error != null) ...[
+                SizedBox(height: 12),
+                Text(_error!, style: TextStyle(color: Colors.red)),
+              ],
               SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,  
@@ -96,9 +142,7 @@ class _LoginScreenState extends State<LoginScreen> {
               SizedBox(
                 width: double.infinity, 
                 child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed("daily_plan");
-                  },
+                  onPressed: _loading ? null : _submit,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xFF226980), 
                     padding: EdgeInsets.symmetric(vertical: 15), 

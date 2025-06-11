@@ -39,7 +39,15 @@ class MainApp extends StatelessWidget {
             email: args["email"]!,
           );
         },
-        "user_imc_goal": (context) => const UserImcGoalPage(),
+        "user_imc_goal": (context) {
+          final args = ModalRoute.of(context)!.settings.arguments 
+              as Map<String, String>;
+          return UserImcGoalPage(
+            username: args['username']!,
+            email:    args['email']!,
+            password: args['password']!,
+          );
+        },
         "user_settings": (context) => const UserSettingsScreen(),
         "daily_plan": (context) => const DailyPlanScreen(),
         "alerts": (context) => const AlertsScreen(),

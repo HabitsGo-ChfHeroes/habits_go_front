@@ -1,7 +1,17 @@
 import 'package:flutter/material.dart';
+import '../services/auth_service.dart';
 
 class UserImcGoalPage extends StatefulWidget {
-  const UserImcGoalPage({super.key});
+  final String username;
+  final String email;
+  final String password;
+
+  const UserImcGoalPage({
+    super.key,
+    required this.username,
+    required this.email,
+    required this.password,
+  });
 
   @override
   State<UserImcGoalPage> createState() => _UserImcGoalPageState();
@@ -15,9 +25,13 @@ class _UserImcGoalPageState extends State<UserImcGoalPage>
   double? imc;
   bool imcCalculated = false;
   String? selectedGoal;
+  bool _loading = false;
+  String? _error;
 
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
+
+  final _authService = AuthService();
 
   @override
   void initState() {
@@ -65,6 +79,38 @@ class _UserImcGoalPageState extends State<UserImcGoalPage>
     if (imc < 25) return "Saludable";
     if (imc < 30) return "Sobrepeso";
     return "Obesidad";
+  }
+
+  Future<void> _submitRegistration() async {
+    if (!imcCalculated || selectedGoal == null) {
+      setState(() => _error = "Calcula el IMC y selecciona un objetivo primero.");
+      return;
+    }
+
+    setState(() {
+      _loading = true;
+      _error = null;
+    });
+
+    final height = double.tryParse(_tallaController.text)!;
+    final weight = double.tryParse(_pesoController.text)!;
+
+    final success = await _authService.register(
+      email:    widget.email,
+      username: widget.username,
+      password: widget.password,
+      height:   height,
+      weight:   weight,
+      goal:     selectedGoal!,
+    );
+
+    setState(() => _loading = false);
+
+    if (success) {
+      Navigator.of(context).pushNamedAndRemoveUntil("daily_plan", (_) => false);
+    } else {
+      setState(() => _error = "Error al registrar el usuario.");
+    }
   }
 
   @override
@@ -241,7 +287,7 @@ class _UserImcGoalPageState extends State<UserImcGoalPage>
                       children: [
                         RadioListTile<String>(
                           title: const Text("Perder grasa"),
-                          value: "Perder grasa",
+                          value: "lose_weight",
                           groupValue: selectedGoal,
                           onChanged: (value) {
                             setState(() {
@@ -251,7 +297,7 @@ class _UserImcGoalPageState extends State<UserImcGoalPage>
                         ),
                         RadioListTile<String>(
                           title: const Text("Ganar masa muscular"),
-                          value: "Ganar masa muscular",
+                          value: "gain_muscle",
                           groupValue: selectedGoal,
                           onChanged: (value) {
                             setState(() {
@@ -261,7 +307,7 @@ class _UserImcGoalPageState extends State<UserImcGoalPage>
                         ),
                         RadioListTile<String>(
                           title: const Text("Mejorar alimentación"),
-                          value: "Mejorar alimentación",
+                          value: "improve_nutrition",
                           groupValue: selectedGoal,
                           onChanged: (value) {
                             setState(() {
@@ -271,22 +317,27 @@ class _UserImcGoalPageState extends State<UserImcGoalPage>
                         ),
                       ],
                     ),
-                    const SizedBox(height: 10),
-                    ElevatedButton(
-                      onPressed: selectedGoal != null ? () {
-                        /*
-                        Navigator.of(context).pushNamedAndRemoveUntil(
-                          "progress",
-                          (Route<dynamic> route) => false,
-                        );
-                        */
-                        Navigator.of(context).pushNamed("daily_plan");
-                      } : null,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF003A79),
-                        foregroundColor: Colors.white,
+                    if (_error != null) ...[
+                      Text(_error!, style: TextStyle(color: Colors.red)),
+                      const SizedBox(height: 8),
+                    ],
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: _loading ? null : _submitRegistration,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFF003A79),
+                          foregroundColor: Colors.white,
+                        ),
+                        child: _loading
+                            ? const SizedBox(
+                                height: 20, width: 20,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2, color: Colors.white,
+                                ),
+                              )
+                            : const Text("Plan personalizado"),
                       ),
-                      child: const Text("Plan personalizado"),
                     ),
                   ],
                 ),
