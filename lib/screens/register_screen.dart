@@ -8,21 +8,22 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterState extends State<RegisterScreen> {
-  final _usernameController       = TextEditingController();
-  final _emailController          = TextEditingController();
-  final _passwordController       = TextEditingController();
+  final _firstNameController = TextEditingController();
+  final _lastNameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
   final _repeatPasswordController = TextEditingController();
 
   String? _error;
 
   void _submit() {
-    final username = _usernameController.text.trim();
-    final email    = _emailController.text.trim();
-    final pass     = _passwordController.text;
-    final repeat   = _repeatPasswordController.text;
+    final firstName = _firstNameController.text.trim();
+    final lastName  = _lastNameController.text.trim();
+    final email     = _emailController.text.trim();
+    final pass      = _passwordController.text;
+    final repeat    = _repeatPasswordController.text;
 
-    // Validaciones
-    if (username.isEmpty || email.isEmpty || pass.isEmpty || repeat.isEmpty) {
+    if (firstName.isEmpty || lastName.isEmpty || email.isEmpty || pass.isEmpty || repeat.isEmpty) {
       setState(() => _error = 'Por favor completa todos los campos');
       return;
     }
@@ -31,10 +32,11 @@ class _RegisterState extends State<RegisterScreen> {
       return;
     }
 
-    // Limpio error y navego pasando los datos
     setState(() => _error = null);
+
     final registrationData = {
-      'username': username,
+      'first_name': firstName,
+      'last_name': lastName,
       'email': email,
       'password': pass,
     };
@@ -58,9 +60,19 @@ class _RegisterState extends State<RegisterScreen> {
             children: [
               SizedBox(height: 20),
               TextField(
-                controller: _usernameController,
+                controller: _firstNameController,
                 decoration: InputDecoration(
-                  labelText: 'Nombre de usuario',
+                  labelText: 'Nombre',
+                  border: OutlineInputBorder(),
+                  filled: true,
+                  fillColor: Colors.grey.shade200,
+                ),
+              ),
+              SizedBox(height: 16),
+              TextField(
+                controller: _lastNameController,
+                decoration: InputDecoration(
+                  labelText: 'Apellido',
                   border: OutlineInputBorder(),
                   filled: true,
                   fillColor: Colors.grey.shade200,

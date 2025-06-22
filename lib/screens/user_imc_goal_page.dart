@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import '../services/auth_service.dart';
 
 class UserImcGoalPage extends StatefulWidget {
-  final String username;
+  final String firstName;
+  final String lastName;
   final String email;
   final String password;
 
   const UserImcGoalPage({
     super.key,
-    required this.username,
+    required this.firstName,
+    required this.lastName,
     required this.email,
     required this.password,
   });
@@ -97,7 +99,8 @@ class _UserImcGoalPageState extends State<UserImcGoalPage>
 
     final success = await _authService.register(
       email:    widget.email,
-      username: widget.username,
+      firstName: widget.firstName,
+      lastName:  widget.lastName,
       password: widget.password,
       height:   height,
       weight:   weight,
@@ -286,8 +289,8 @@ class _UserImcGoalPageState extends State<UserImcGoalPage>
                     Column(
                       children: [
                         RadioListTile<String>(
-                          title: const Text("Perder grasa"),
-                          value: "lose_weight",
+                          title: const Text("Perder peso"),
+                          value: "Perder peso",
                           groupValue: selectedGoal,
                           onChanged: (value) {
                             setState(() {
@@ -297,7 +300,7 @@ class _UserImcGoalPageState extends State<UserImcGoalPage>
                         ),
                         RadioListTile<String>(
                           title: const Text("Ganar masa muscular"),
-                          value: "gain_muscle",
+                          value: "Ganar masa muscular",
                           groupValue: selectedGoal,
                           onChanged: (value) {
                             setState(() {
@@ -307,7 +310,7 @@ class _UserImcGoalPageState extends State<UserImcGoalPage>
                         ),
                         RadioListTile<String>(
                           title: const Text("Mejorar alimentación"),
-                          value: "improve_nutrition",
+                          value: "Mejorar la alimentacion",
                           groupValue: selectedGoal,
                           onChanged: (value) {
                             setState(() {

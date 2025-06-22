@@ -43,7 +43,8 @@ class MainApp extends StatelessWidget {
           final args = ModalRoute.of(context)!.settings.arguments 
               as Map<String, String>;
           return UserImcGoalPage(
-            username: args['username']!,
+            firstName: args['first_name']!,
+            lastName:  args['last_name']!,
             email:    args['email']!,
             password: args['password']!,
           );

@@ -2,11 +2,12 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class AuthService {
-  static const String _baseUrl = 'http://0.0.0.0:8000/api/auth'; // Reemplazar 0.0.0.0 con la IP de tu servidor
+  static const String _baseUrl = 'http://192.168.18.21:8000/api/auth'; // Reemplazar 0.0.0.0 con la IP de tu servidor
 
   Future<bool> register({
     required String email,
-    required String username,
+    required String firstName,
+    required String lastName,
     required String password,
     required double height,
     required double weight,
@@ -18,13 +19,17 @@ class AuthService {
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
         'email': email,
-        'username': username,
+        'first_name': firstName,
+        'last_name': lastName,
         'password': password,
         'height': height,
         'weight': weight,
         'goal': goal,
       }),
     );
+    
+    print('Response: ${resp.body}');
+
     return resp.statusCode == 200;
   }
 
