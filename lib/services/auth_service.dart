@@ -1,8 +1,9 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import '../config/env.dart';
 
 class AuthService {
-  static const String _baseUrl = 'http://0.0.0.0:8000/api/auth'; // Reemplazar 0.0.0.0 con la IP de tu servidor
+  static const String _baseUrl = '${Env.baseUrl}/auth';
 
   Future<bool> register({
     required String email,
@@ -27,13 +28,11 @@ class AuthService {
         'goal': goal,
       }),
     );
-    
-    print('Response: ${resp.body}');
 
     return resp.statusCode == 200;
   }
 
-  Future<bool> login(String username, String password) async {
+  Future<Map<String, dynamic>?> login(String username, String password) async {
     final url = Uri.parse('$_baseUrl/login');
     final resp = await http.post(
       url,
@@ -44,9 +43,9 @@ class AuthService {
       }),
     );
     if (resp.statusCode == 200) {
-      // final userData = jsonDecode(resp.body);
-      return true;
+      final userData = jsonDecode(resp.body);
+      return userData;
     }
-    return false;
+    return null;
   }
 }

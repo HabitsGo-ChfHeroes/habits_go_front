@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'package:habits_go_front/providers/user_provider.dart';
 import 'package:habits_go_front/screens/alerts_screen.dart';
 import 'package:habits_go_front/screens/forum_screen.dart';
 import 'package:habits_go_front/screens/login_screen.dart';
@@ -14,7 +16,13 @@ import 'package:habits_go_front/screens/daily_plan_screen.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
-  runApp(const MainApp());
+  runApp(MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => UserProvider()),
+      ],
+      child: const MainApp(),
+    ),
+  );
 }
 
 class MainApp extends StatelessWidget {

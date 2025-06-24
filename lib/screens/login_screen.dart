@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../services/auth_service.dart';
+import '../providers/user_provider.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -35,8 +37,10 @@ class _LoginScreenState extends State<LoginScreen> {
     });
   
     try {
-      final success = await _authService.login(email, pass);
-      if (success) {
+      final userData = await _authService.login(email, pass);
+      if (userData != null) {
+        Provider.of<UserProvider>(context, listen: false).setUserId(userData['id']);
+        Provider.of<UserProvider>(context, listen: false).setUserGoal(userData['goal']);
         Navigator.of(context).pushReplacementNamed("daily_plan");
       } else {
         setState(() {
