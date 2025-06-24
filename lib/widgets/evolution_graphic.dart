@@ -2,7 +2,9 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class EvolutionGraphic extends StatefulWidget {
-  const EvolutionGraphic({super.key});
+  final List<int> data;
+
+  const EvolutionGraphic({super.key, required this.data});
 
   @override
   State<EvolutionGraphic> createState() => _EvolutionGraphicState();
@@ -62,20 +64,15 @@ class _EvolutionGraphicState extends State<EvolutionGraphic> {
         ),
         minX: 0.5,
         maxX: 7.5,
-        minY: 0,
+        minY: -0.5,
         maxY: 6,
         lineBarsData: [
           LineChartBarData(
-            spots: const [
-              FlSpot(0.5, 3), // START 
-              FlSpot(1, 3),   // LUN
-              FlSpot(2, 2),   // MAR
-              FlSpot(3, 5),   // MIE
-              FlSpot(4, 4),   // JUE
-              FlSpot(5, 4),   // VIE
-              FlSpot(6, 3),   // SAB
-              FlSpot(7, 4),   // DOM
-              FlSpot(7.5, 4), // END
+            spots: [
+              FlSpot(0.5, widget.data.isNotEmpty ? widget.data[0].toDouble() : 0),
+              for (int i = 0; i < widget.data.length; i++)
+                FlSpot((i + 1).toDouble(), widget.data[i].toDouble()),
+              FlSpot(7.5, widget.data.isNotEmpty ? widget.data[6].toDouble() : 0),
             ],
             isCurved: true,
             gradient: LinearGradient(colors: gradientColors),
