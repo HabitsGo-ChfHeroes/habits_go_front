@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../services/auth_service.dart';
+import '../providers/user_provider.dart';
 
 class UserImcGoalPage extends StatefulWidget {
   final String firstName;
@@ -97,7 +99,7 @@ class _UserImcGoalPageState extends State<UserImcGoalPage>
     final height = double.tryParse(_tallaController.text)!;
     final weight = double.tryParse(_pesoController.text)!;
 
-    final success = await _authService.register(
+    final result = await _authService.register(
       email:    widget.email,
       firstName: widget.firstName,
       lastName:  widget.lastName,
@@ -109,8 +111,12 @@ class _UserImcGoalPageState extends State<UserImcGoalPage>
 
     setState(() => _loading = false);
 
-    if (success) {
-      Navigator.of(context).pushNamedAndRemoveUntil("daily_plan", (_) => false);
+    if (result != null) {
+      final userProvider = Provider.of<UserProvider>(context, listen: false);
+      userProvider.setUserId(result['id']);
+      userProvider.setUserGoal(result['goal']);
+
+      Navigator.of(context).pushNamedAndRemoveUntil("daily_plan_loading", (_) => false);
     } else {
       setState(() => _error = "Error al registrar el usuario.");
     }

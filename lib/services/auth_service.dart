@@ -5,7 +5,7 @@ import '../config/env.dart';
 class AuthService {
   static const String _baseUrl = '${Env.baseUrl}/auth';
 
-  Future<bool> register({
+  Future<Map<String, dynamic>?> register({
     required String email,
     required String firstName,
     required String lastName,
@@ -29,7 +29,12 @@ class AuthService {
       }),
     );
 
-    return resp.statusCode == 200;
+    if (resp.statusCode == 200) {
+      final userData = jsonDecode(resp.body);
+      return userData;
+    }
+
+    return null;
   }
 
   Future<Map<String, dynamic>?> login(String username, String password) async {

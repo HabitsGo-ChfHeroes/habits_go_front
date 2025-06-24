@@ -31,4 +31,25 @@ class PlanFoodService {
       throw Exception('Error de conexión: $e');
     }
   }
+
+  Future<String> generateDailyPlan(int userId) async {
+    final url = Uri.parse('$_baseUrl/daily/plan');
+  
+    try {
+      final response = await http.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'user_id': userId}),
+      );
+  
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        return data['message'] as String;
+      } else {
+        throw Exception('Error al generar el plan diario: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Error de conexión: $e');
+    }
+  }
 }
