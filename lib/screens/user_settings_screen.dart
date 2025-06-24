@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../services/user_service.dart';
+import '../providers/user_provider.dart';
 
 class UserSettingsScreen extends StatefulWidget {
   const UserSettingsScreen({super.key});
@@ -8,14 +11,37 @@ class UserSettingsScreen extends StatefulWidget {
 }
 
 class _UserSettingsScreenState extends State<UserSettingsScreen> {
+  final _userService = UserService();
+
+  String? firstName;
+  String? lastName;
+  double? imc;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserData();
+  }
+
+  Future<void> _loadUserData() async {
+    final userId = Provider.of<UserProvider>(context, listen: false).userId!;
+    final user = await _userService.getUserDetail(userId);
+
+    setState(() {
+      firstName = user?['first_name'];
+      lastName = user?['last_name'];
+      imc = user?['imc'];
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    double imc = 23.4;
-    String estadoIMC = "saludable";
+    final goal = Provider.of<UserProvider>(context, listen: false).userGoal;
+
     return Scaffold(
       backgroundColor: const Color(0xFFF9FAFB),
       appBar: AppBar(
-        title: const Text("Profile"),
+        title: const Text("Perfil"),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
@@ -57,8 +83,8 @@ class _UserSettingsScreenState extends State<UserSettingsScreen> {
                     ],
                   ),
                   const SizedBox(height: 10),
-                  const Text(
-                    "Farid Hinostroza",
+                  Text(
+                    "${firstName ?? ''} ${lastName ?? ''}",
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                 ],
@@ -112,7 +138,7 @@ class _UserSettingsScreenState extends State<UserSettingsScreen> {
                       Row(
                         children: [
                           Text(
-                            imc.toStringAsFixed(1),
+                            imc?.toStringAsFixed(1) ?? '...',
                             style: const TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
@@ -121,7 +147,7 @@ class _UserSettingsScreenState extends State<UserSettingsScreen> {
                           ),
                           const SizedBox(width: 8),
                           Text(
-                            "Tu IMC está en un estado $estadoIMC",
+                            imc != null ? "Tu IMC está en un estado ${_estadoIMC(imc!)}" : '',
                             style: const TextStyle(
                               fontSize: 16,
                               color: Color(0xFF226980),
@@ -134,10 +160,7 @@ class _UserSettingsScreenState extends State<UserSettingsScreen> {
                         "Objetivo Actual",
                         style: TextStyle(color: Colors.grey),
                       ),
-                      const Text(
-                        "Ganar masa muscular",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
+                      Text(goal ?? 'Cargando...', style: const TextStyle(fontWeight: FontWeight.bold)),
                       const SizedBox(height: 16),
                       const Text(
                         "Gráfica de progreso",
@@ -180,6 +203,13 @@ class _UserSettingsScreenState extends State<UserSettingsScreen> {
         ),
       ),
     );
+  }
+
+  String _estadoIMC(double imc) {
+    if (imc < 18.5) return "bajo peso";
+    if (imc < 25) return "saludable";
+    if (imc < 30) return "sobrepeso";
+    return "obesidad";
   }
 }
 
