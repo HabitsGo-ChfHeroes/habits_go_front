@@ -47,7 +47,7 @@ class PlanMeal {
   final int planFoodId;
   final String name;
   final String hour;
-  final String status;
+  String status;
   final PlanMealFood food;
 
   PlanMeal({
@@ -70,16 +70,19 @@ class PlanMeal {
 }
 
 class PlanDetailResponse {
+  final int planId;
   final String date;
   final List<PlanMeal> meals;
 
   PlanDetailResponse({
+    required this.planId,
     required this.date,
     required this.meals,
   });
 
   factory PlanDetailResponse.fromJson(Map<String, dynamic> json) {
     return PlanDetailResponse(
+      planId: json['id'],
       date: json['date'],
       meals: (json['meals'] as List)
           .map((e) => PlanMeal.fromJson(e))
