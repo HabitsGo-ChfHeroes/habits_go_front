@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:habits_go_front/screens/edit_profile_screen.dart';
 import 'package:provider/provider.dart';
 import '../services/user_service.dart';
 import '../providers/user_provider.dart';
@@ -13,9 +14,13 @@ class UserSettingsScreen extends StatefulWidget {
 class _UserSettingsScreenState extends State<UserSettingsScreen> {
   final _userService = UserService();
 
+  bool _isLoading = true;
+
   String? firstName;
   String? lastName;
   double? imc;
+  double? height;
+  double? weight;
 
   @override
   void initState() {
@@ -31,6 +36,9 @@ class _UserSettingsScreenState extends State<UserSettingsScreen> {
       firstName = user?['first_name'];
       lastName = user?['last_name'];
       imc = user?['imc'];
+      height = user?['height'];
+      weight = user?['weight'];
+      _isLoading = false;
     });
   }
 
@@ -182,7 +190,23 @@ class _UserSettingsScreenState extends State<UserSettingsScreen> {
               child: SizedBox(
                 width: double.infinity,
                 child: ElevatedButton.icon(
-                  onPressed: () {},
+                  onPressed: _isLoading
+                    ? null
+                    : () async {
+                    final result = await Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => EditProfileScreen(
+                          initialHeight: height!, // Altura del usuario (cárgala del backend)
+                          initialWeight: weight!,  // Peso del usuario (también del backend)
+                          initialGoal: goal!,
+                        ),
+                      ),
+                    );
+
+                    if (result != null && result == true) {
+                      _loadUserData(); // Refresca los datos después de editar
+                    }
+                  },
                   icon: const Icon(Icons.edit),
                   label: const Text(
                     "Editar Perfil",

@@ -81,4 +81,34 @@ class UserService {
       throw Exception('Error de conexión: $e');
     }
   }
+
+  Future<Map<String, dynamic>?> updateUserProfile({
+    required int userId,
+    required double height,
+    required double weight,
+    required String goal,
+  }) async {
+    final url = Uri.parse('$_baseUrl/$userId/profile');
+    final body = jsonEncode({
+      'height': height,
+      'weight': weight,
+      'goal': goal,
+    });
+
+    try {
+      final response = await http.put(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: body,
+      );
+
+      if (response.statusCode == 200) {
+        return jsonDecode(response.body);
+      } else {
+        throw Exception('Error al actualizar el perfil del usuario.');
+      }
+    } catch (e) {
+      throw Exception('Error de conexión: $e');
+    }
+  }
 }
