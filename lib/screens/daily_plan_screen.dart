@@ -198,6 +198,10 @@ class _DailyPlanScreenState extends State<DailyPlanScreen> {
         ),
         actions: [
           IconButton(
+            icon: const Icon(Icons.favorite),
+            onPressed: () => Navigator.pushNamed(context, "favorite_foods"),
+          ),
+          IconButton(
             icon: const Icon(Icons.person),
             onPressed: () => Navigator.pushNamed(context, "user_settings"),
           ),
