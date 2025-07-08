@@ -318,54 +318,76 @@ class _DailyPlanScreenState extends State<DailyPlanScreen> {
         context: context,
         builder: (context) {
           String comentario = '';
-          return AlertDialog(
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-            title: const Text('Añadir comentario'),
-            content: TextField(
-              autofocus: true,
-              decoration: const InputDecoration(
-                hintText: 'Escribe tu comentario aquí',
-                border: OutlineInputBorder(),
-              ),
-              maxLines: 3,
-              onChanged: (value) {
-                comentario = value;
-              },
-            ),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context); // cerrar sin guardar
-                },
-                child: const Text('Cancelar'),
-              ),
-              ElevatedButton(
-                onPressed: () async {
-                  if (comentario.trim().isNotEmpty) {
-                    try {
-                      // Aquí se llama al método updatePlanComment
-                      await _planService.updatePlanComment(_planId!, comentario);
+          final TextEditingController _controller = TextEditingController();
 
-                      // Mostrar un Snackbar o mensaje de éxito
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Comentario añadido')),
-                      );
-                    } catch (e) {
-                      // Manejar el error si no se puede guardar el comentario
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Error: $e')),
-                      );
-                    }
-                    Navigator.pop(context); // cerrar dialog
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Por favor ingresa un comentario')),
-                    );
-                  }
-                },
-                child: const Text('Guardar'),
-              ),
-            ],
+          return FutureBuilder<String>(
+            future: _planService.fetchPlanComment(_planId!),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const AlertDialog(
+                  content: SizedBox(
+                    height: 80,
+                    child: Center(child: CircularProgressIndicator()),
+                  ),
+                );
+              } else if (snapshot.hasError) {
+                return AlertDialog(
+                  title: const Text('Error'),
+                  content: Text('No se pudo cargar el comentario: ${snapshot.error}'),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: const Text('Cerrar'),
+                    ),
+                  ],
+                );
+              } else {
+                comentario = snapshot.data ?? '';
+                _controller.text = comentario;
+
+                return AlertDialog(
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                  title: const Text('Añadir comentario'),
+                  content: TextField(
+                    controller: _controller,
+                    decoration: const InputDecoration(
+                      hintText: 'Escribe tu comentario aquí',
+                      border: OutlineInputBorder(),
+                    ),
+                    maxLines: 3,
+                    onChanged: (value) => comentario = value,
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: const Text('Cancelar'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () async {
+                        if (comentario.trim().isNotEmpty) {
+                          try {
+                            await _planService.updatePlanComment(_planId!, comentario);
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('Comentario guardado')),
+                            );
+                          } catch (e) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text('Error: $e')),
+                            );
+                          }
+                          Navigator.pop(context);
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Por favor ingresa un comentario')),
+                          );
+                        }
+                      },
+                      child: const Text('Guardar'),
+                    ),
+                  ],
+                );
+              }
+            },
           );
         },
       );

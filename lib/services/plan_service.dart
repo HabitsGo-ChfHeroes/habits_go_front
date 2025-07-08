@@ -40,6 +40,15 @@ class PlanService {
     }
   }
 
+  Future<String> fetchPlanComment(int planId) async {
+    final url = Uri.parse('$_baseUrl/$planId/comment'); // Asegúrate de que sea 'comment' y no 'commet'
 
+    final response = await http.get(url);
 
+    if (response.statusCode == 200) {
+      return response.body.replaceAll('"', '');
+    } else {
+      throw Exception('No se pudo obtener el comentario del plan');
+    }
+  }
 }
