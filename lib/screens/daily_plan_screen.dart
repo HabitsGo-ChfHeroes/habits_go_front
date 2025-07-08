@@ -30,6 +30,17 @@ class DailyPlanScreen extends StatefulWidget {
 class _DailyPlanScreenState extends State<DailyPlanScreen> {
   bool _isCompleted = false;
 
+  String? _motivationalMessage;
+
+  final List<String> _motivationalMessages = [
+    "¡Excelente trabajo! Cada paso cuenta.",
+    "Recuerda: lo que comes hoy alimenta tu meta de mañana.",
+    "¡Tu disciplina te está acercando a tu mejor versión!",
+    "Cada comida saludable es una victoria.",
+    "Tu cuerpo te lo agradecerá, ¡sigue así!",
+    "No es solo un plan, es un estilo de vida. ¡Bien hecho!",
+  ];
+
   // Datos estáticos de ejemplo para cada comida
   static const List<Meal> meals = [
   Meal(
@@ -84,6 +95,16 @@ class _DailyPlanScreenState extends State<DailyPlanScreen> {
     videoUrl: 'https://www.youtube.com/watch?v=Q2U_3CcFjnk',
   ),
 ];
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (_isCompleted) {
+      _motivationalMessage = (_motivationalMessages.toList()..shuffle()).first;
+    }
+  }
+
 @override
 Widget build(BuildContext context) {
   return Scaffold(
@@ -104,113 +125,149 @@ Widget build(BuildContext context) {
     ),
     body: SingleChildScrollView(
       padding: const EdgeInsets.all(16.0),
-      child: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              Colors.teal.shade600,
-              Colors.teal.shade300,
-            ],
-          ),
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black26,
-              blurRadius: 12,
-              offset: Offset(0, 6),
+      child: Column(
+        children: [
+          // Contenedor principal con fondo celeste
+          Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Colors.teal.shade600,
+                  Colors.teal.shade300,
+                ],
+              ),
+              borderRadius: BorderRadius.circular(16),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black26,
+                  blurRadius: 12,
+                  offset: Offset(0, 6),
+                ),
+              ],
             ),
-          ],
-        ),
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Objetivo y duración
-            Row(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Icon(Icons.fitness_center, color: Colors.white),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: Text(
-                    'Objetivo: Ganar masa muscular',
-                    style: GoogleFonts.poppins(
-                      textStyle: Theme.of(context)
-                          .textTheme
-                          .titleMedium
-                          ?.copyWith(
+                // Objetivo y duración
+                Row(
+                  children: [
+                    Icon(Icons.fitness_center, color: Colors.white),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        'Objetivo: Ganar masa muscular',
+                        style: GoogleFonts.poppins(
+                          textStyle: Theme.of(context)
+                              .textTheme
+                              .titleMedium
+                              ?.copyWith(
                             color: Colors.white,
                             fontWeight: FontWeight.w600,
                             letterSpacing: 0.5,
                           ),
+                        ),
+                      ),
                     ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                const Text(
+                  'Duración estimada: 45 min',
+                  style: TextStyle(color: Colors.white70),
+                ),
+                const SizedBox(height: 16),
+
+                // Lista de comidas como mini-cards clicables
+                Card(
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Column(
+                    children: meals.map((meal) {
+                      return MealItemCard(
+                        meal: meal,
+                        onTap: () => _showMealDialog(context, meal),
+                      );
+                    }).toList(),
+                  ),
+                ),
+
+                const SizedBox(height: 24),
+
+                // Checkbox Meta cumplida
+                Row(
+                  children: [
+                    Checkbox(
+                      value: _isCompleted,
+                      onChanged: (value) {
+                        setState(() {
+                          _isCompleted = value ?? false;
+                          if (_isCompleted) {
+                            _motivationalMessage =
+                                (_motivationalMessages.toList()..shuffle()).first;
+                          } else {
+                            _motivationalMessage = null;
+                          }
+                        });
+                      },
+                    ),
+                    const SizedBox(width: 8),
+                    const Text(
+                      'Meta cumplida',
+                      style: TextStyle(fontSize: 16, color: Colors.white),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+
+                Center(
+                  child: ElevatedButton.icon(
+                    icon: Icon(Icons.show_chart),
+                    label: Text('Visualizar progreso'),
+                    style: ElevatedButton.styleFrom(
+                      padding:
+                      const EdgeInsets.symmetric(vertical: 14, horizontal: 32),
+                      shape: StadiumBorder(),
+                      elevation: 6,
+                      shadowColor: Colors.teal.withOpacity(0.4),
+                    ),
+                    onPressed: () => Navigator.pushNamed(context, 'progress'),
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 8),
-            const Text(
-              'Duración estimada: 45 min',
-              style: TextStyle(color: Colors.white70),
-            ),
-            const SizedBox(height: 16),
+          ),
 
-            // Lista de comidas como mini-cards clicables
-            Card(
-              color: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Column(
-                children: meals.map((meal) {
-                  return MealItemCard(
-                    meal: meal,
-                    onTap: () => _showMealDialog(context, meal),
-                  );
-                }).toList(),
-              ),
-            ),
-
-            const SizedBox(height: 24),
-
-            // Checkbox Meta cumplida
-            Row(
-              children: [
-                Checkbox(
-                  value: _isCompleted,
-                  onChanged: (value) {
-                    setState(() {
-                      _isCompleted = value ?? false;
-                    });
-                  },
+          // ✅ Mensaje motivacional (fuera del Container, pero dentro del Column)
+          if (_motivationalMessage != null)
+            Padding(
+              padding: const EdgeInsets.only(top: 16.0),
+              child: Card(
+                color: Colors.orange.shade100,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
                 ),
-                const SizedBox(width: 8),
-                const Text(
-                  'Meta cumplida',
-                  style: TextStyle(fontSize: 16, color: Colors.white),
+                elevation: 4,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text(
+                    _motivationalMessage!,
+                    style: GoogleFonts.poppins(
+                      textStyle: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.brown,
+                      ),
+                    ),
+                  ),
                 ),
-              ],
-            ),
-            const SizedBox(height: 16),
-
-            Center(
-              child: ElevatedButton.icon(
-                icon: Icon(Icons.show_chart),
-                label: Text('Visualizar progreso'),
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 14, horizontal: 32),
-                  shape: StadiumBorder(),
-                  elevation: 6,
-                  shadowColor: Colors.teal.withOpacity(0.4),
-                ),
-                onPressed: () =>
-                    Navigator.pushNamed(context, 'progress'),
               ),
             ),
-          ],
-        ),
+        ],
       ),
     ),
   );
