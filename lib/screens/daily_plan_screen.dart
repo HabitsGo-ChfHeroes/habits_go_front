@@ -41,6 +41,16 @@ class _DailyPlanScreenState extends State<DailyPlanScreen> {
     "No es solo un plan, es un estilo de vida. ¡Bien hecho!",
   ];
 
+  final List<String> _healthTips = [
+    'Toma al menos 2 litros de agua al día.',
+    'Incluye vegetales en todas tus comidas.',
+    'Evita alimentos ultraprocesados.',
+    'Come despacio y disfruta cada bocado.',
+    'Planifica tus comidas con anticipación.',
+    'No te saltes el desayuno.',
+  ];
+
+
   // Datos estáticos de ejemplo para cada comida
   static const List<Meal> meals = [
   Meal(
@@ -100,10 +110,31 @@ class _DailyPlanScreenState extends State<DailyPlanScreen> {
   void initState() {
     super.initState();
 
+    // Si la meta ya está marcada como completada, muestra un mensaje motivador
     if (_isCompleted) {
-      _motivationalMessage = (_motivationalMessages.toList()..shuffle()).first;
+      _motivationalMessage =
+          (_motivationalMessages.toList()..shuffle()).first;
     }
+
+    // Mostrar consejo de alimentación al cargar la pantalla
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final randomTip = (_healthTips.toList()..shuffle()).first;
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Consejo: $randomTip',
+            style: const TextStyle(fontSize: 16),
+          ),
+          duration: const Duration(seconds: 5),
+          backgroundColor: Colors.teal.shade700,
+          behavior: SnackBarBehavior.floating,
+          margin: const EdgeInsets.all(16),
+        ),
+      );
+    });
   }
+
 
 @override
 Widget build(BuildContext context) {
