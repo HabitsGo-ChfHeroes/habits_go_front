@@ -18,4 +18,28 @@ class PlanService {
       throw Exception('No se pudo obtener el plan diario');
     }
   }
+
+  // Método para actualizar el comentario
+  Future<Map<String, dynamic>?>  updatePlanComment(int planId, String comment) async {
+    final url = Uri.parse('$_baseUrl/$planId/comment');
+
+    final body = jsonEncode({
+      'comment': comment,
+    });
+
+    final response = await http.put(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: body,
+    );
+
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+   } else {
+      throw Exception('No se pudo actualizar el comentario');
+    }
+  }
+
+
+
 }
