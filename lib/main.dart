@@ -13,6 +13,7 @@ import 'package:habits_go_front/screens/user_imc_goal_page.dart';
 import 'package:habits_go_front/screens/user_settings_screen.dart';
 import 'package:habits_go_front/screens/daily_plan_screen.dart';
 import 'package:habits_go_front/screens/daily_plan_loading.dart';
+import 'package:habits_go_front/screens/favorite_foods_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -60,6 +61,7 @@ class MainApp extends StatelessWidget {
         },
         "user_settings": (context) => const UserSettingsScreen(),
         "daily_plan": (context) => const DailyPlanScreen(),
+        "favorite_foods": (context) => const FavoriteFoodsScreen(),
         "alerts": (context) => const AlertsScreen(),
         "daily_plan_loading": (context) => const DailyPlanLoadingScreen(),
       }
