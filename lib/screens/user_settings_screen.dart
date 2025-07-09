@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../services/user_service.dart';
 import '../providers/user_provider.dart';
+import '../services/payment_service.dart';
 
 class UserSettingsScreen extends StatefulWidget {
   const UserSettingsScreen({super.key});
@@ -16,6 +17,8 @@ class _UserSettingsScreenState extends State<UserSettingsScreen> {
   String? firstName;
   String? lastName;
   double? imc;
+  String? _membresiaMensaje;
+  Color _membresiaColor = Colors.orange;
 
   @override
   void initState() {
@@ -26,12 +29,102 @@ class _UserSettingsScreenState extends State<UserSettingsScreen> {
   Future<void> _loadUserData() async {
     final userId = Provider.of<UserProvider>(context, listen: false).userId!;
     final user = await _userService.getUserDetail(userId);
+    final paymentData = await PaymentService().fetchLatestMembershipPayment(userId);
 
     setState(() {
       firstName = user?['first_name'];
       lastName = user?['last_name'];
       imc = user?['imc'];
+
+      if (paymentData != null) {
+        final now = DateTime.now();
+        final start = DateTime.parse(paymentData['start_date']);
+        final end = DateTime.parse(paymentData['end_date']);
+
+        if (now.isAfter(start) && now.isBefore(end)) {
+          _membresiaMensaje = '✅ Cuenta con el Modo Plus';
+          _membresiaColor = Colors.green;
+        } else {
+          _membresiaMensaje = '⚠️ Recuerda que solo tienes 7 días de prueba';
+          _membresiaColor = Colors.orange;
+        }
+      } else {
+        _membresiaMensaje = '⚠️ Recuerda que solo tienes 7 días de prueba';
+        _membresiaColor = Colors.orange;
+      }
     });
+  }
+
+  void _showLastPaymentDialog() async {
+    final userId = Provider.of<UserProvider>(context, listen: false).userId;
+    if (userId == null) return;
+
+    final payment = await PaymentService().fetchLatestMembershipPayment(userId);
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        if (payment == null) {
+          return AlertDialog(
+            title: const Text('Último Pago'),
+            content: const Text('No se encontró información de pago.'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text('Cerrar'),
+              ),
+            ],
+          );
+        }
+
+        return AlertDialog(
+          title: const Text('🧾 Último Pago'),
+          content: Table(
+            defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+            columnWidths: const {
+              0: IntrinsicColumnWidth(),
+              1: FlexColumnWidth(),
+            },
+            children: [
+              TableRow(children: [
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 6),
+                  child: Text("Monto:", style: TextStyle(fontWeight: FontWeight.bold)),
+                ),
+                Text("\$${payment['amount']}"),
+              ]),
+              TableRow(children: [
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 6),
+                  child: Text("Moneda:", style: TextStyle(fontWeight: FontWeight.bold)),
+                ),
+                Text(payment['currency']),
+              ]),
+              TableRow(children: [
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 6),
+                  child: Text("Inicio:", style: TextStyle(fontWeight: FontWeight.bold)),
+                ),
+                Text(payment['start_date'].substring(0, 10)),
+              ]),
+              TableRow(children: [
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 6),
+                  child: Text("Finaliza:", style: TextStyle(fontWeight: FontWeight.bold)),
+                ),
+                Text(payment['end_date'].substring(0, 10)),
+              ]),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Cerrar'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -46,7 +139,14 @@ class _UserSettingsScreenState extends State<UserSettingsScreen> {
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
         ),
-        backgroundColor: Color(0xFF226980),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.receipt_long),
+            tooltip: 'Ver último pago',
+            onPressed: _showLastPaymentDialog,
+          ),
+        ],
+        backgroundColor: const Color(0xFF226980),
         foregroundColor: Colors.white,
         elevation: 2,
       ),
@@ -173,6 +273,28 @@ class _UserSettingsScreenState extends State<UserSettingsScreen> {
                 ),
               ),
             ),
+
+            if (_membresiaMensaje != null)
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                child: Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: _membresiaColor.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: _membresiaColor),
+                  ),
+                  child: Text(
+                    _membresiaMensaje!,
+                    style: TextStyle(
+                      color: _membresiaColor,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
 
             const Spacer(),
 
@@ -428,3 +550,5 @@ void showIMCModal(BuildContext context) {
     },
   );
 }
+
+
