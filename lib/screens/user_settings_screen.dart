@@ -182,10 +182,57 @@ class _UserSettingsScreenState extends State<UserSettingsScreen> {
               child: SizedBox(
                 width: double.infinity,
                 child: ElevatedButton.icon(
-                  onPressed: () {},
+                  onPressed: () async {
+                    await Navigator.pushNamed(context, 'edit_profile');
+                    if (mounted) _loadUserData();
+                  },
                   icon: const Icon(Icons.edit),
                   label: const Text(
                     "Editar Perfil",
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    backgroundColor: Color(0xFF226980),
+                    foregroundColor: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: SizedBox(
+                width: double.infinity,
+                child: ElevatedButton.icon(
+                  onPressed: () => Navigator.pushNamed(context, 'habit_questionnaire'),
+                  icon: const Icon(Icons.assignment),
+                  label: const Text(
+                    'Cambiar H\u00e1bitos',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    backgroundColor: Color(0xFF226980),
+                    foregroundColor: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: SizedBox(
+                width: double.infinity,
+                child: ElevatedButton.icon(
+                  onPressed: () => Navigator.pushNamed(context, 'comment'),
+                  icon: const Icon(Icons.comment),
+                  label: const Text(
+                    'Añadir Comentario',
                     style: TextStyle(fontSize: 18),
                   ),
                   style: ElevatedButton.styleFrom(
