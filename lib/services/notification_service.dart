@@ -38,6 +38,7 @@ class NotificationService {
     final hours = [0, 6, 12, 18];
     for (int i = 0; i < hours.length; i++) {
       final now = tz.TZDateTime.now(tz.local);
+
       tz.TZDateTime scheduled = tz.TZDateTime(
         tz.local,
         now.year,
@@ -57,7 +58,7 @@ class NotificationService {
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.wallClockTime,
         matchDateTimeComponents: DateTimeComponents.time,
-        androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
       );
     }
   }
@@ -70,10 +71,9 @@ class NotificationService {
       priority: Priority.high,
     );
     const iosDetails = DarwinNotificationDetails();
-    const details = NotificationDetails(
-      android: androidDetails,
-      iOS: iosDetails,
-    );
+
+    const details = NotificationDetails(android: androidDetails, iOS: iosDetails);
+
     await _plugin.show(
       100,
       'Te esperamos de vuelta',

@@ -16,6 +16,7 @@ import 'package:habits_go_front/screens/daily_plan_loading.dart';
 import 'package:habits_go_front/screens/favorite_foods_screen.dart';
 import 'package:habits_go_front/screens/habits_questionnaire_screen.dart';
 import 'package:habits_go_front/screens/comment_screen.dart';
+import 'package:habits_go_front/screens/edit_profile_screen.dart';
 import 'package:habits_go_front/services/notification_service.dart';
 
 void main() {
@@ -93,6 +94,7 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
         "favorite_foods": (context) => const FavoriteFoodsScreen(),
         "alerts": (context) => const AlertsScreen(),
         "comment": (context) => const CommentScreen(),
+        "edit_profile": (context) => const EditProfileScreen(),
         "daily_plan_loading": (context) => const DailyPlanLoadingScreen(),
       }
     );

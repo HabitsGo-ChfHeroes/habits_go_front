@@ -182,7 +182,10 @@ class _UserSettingsScreenState extends State<UserSettingsScreen> {
               child: SizedBox(
                 width: double.infinity,
                 child: ElevatedButton.icon(
-                  onPressed: () {},
+                  onPressed: () async {
+                    await Navigator.pushNamed(context, 'edit_profile');
+                    if (mounted) _loadUserData();
+                  },
                   icon: const Icon(Icons.edit),
                   label: const Text(
                     "Editar Perfil",
@@ -221,7 +224,6 @@ class _UserSettingsScreenState extends State<UserSettingsScreen> {
                 ),
               ),
             ),
-
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: SizedBox(
