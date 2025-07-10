@@ -203,7 +203,7 @@ class _UserSettingsScreenState extends State<UserSettingsScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
               child: SizedBox(
                 width: double.infinity,
                 child: ElevatedButton.icon(

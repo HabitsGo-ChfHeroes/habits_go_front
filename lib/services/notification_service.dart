@@ -13,10 +13,9 @@ class NotificationService {
 
     await _plugin.initialize(settings);
     await _plugin
-        .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
-        ?.requestPermission();
-    await _plugin
-        .resolvePlatformSpecificImplementation<IOSFlutterLocalNotificationsPlugin>()
+        .resolvePlatformSpecificImplementation<
+          IOSFlutterLocalNotificationsPlugin
+        >()
         ?.requestPermissions(alert: true, badge: true, sound: true);
 
     tz.initializeTimeZones();
@@ -31,13 +30,22 @@ class NotificationService {
       priority: Priority.high,
     );
     const iosDetails = DarwinNotificationDetails();
-    const details = NotificationDetails(android: androidDetails, iOS: iosDetails);
+    const details = NotificationDetails(
+      android: androidDetails,
+      iOS: iosDetails,
+    );
 
     final hours = [0, 6, 12, 18];
     for (int i = 0; i < hours.length; i++) {
       final now = tz.TZDateTime.now(tz.local);
-      tz.TZDateTime scheduled =
-          tz.TZDateTime(tz.local, now.year, now.month, now.day, hours[i]);
+
+      tz.TZDateTime scheduled = tz.TZDateTime(
+        tz.local,
+        now.year,
+        now.month,
+        now.day,
+        hours[i],
+      );
       if (scheduled.isBefore(now)) {
         scheduled = scheduled.add(const Duration(days: 1));
       }
@@ -63,7 +71,9 @@ class NotificationService {
       priority: Priority.high,
     );
     const iosDetails = DarwinNotificationDetails();
+
     const details = NotificationDetails(android: androidDetails, iOS: iosDetails);
+
     await _plugin.show(
       100,
       'Te esperamos de vuelta',
