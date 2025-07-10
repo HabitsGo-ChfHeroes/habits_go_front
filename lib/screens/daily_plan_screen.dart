@@ -25,6 +25,25 @@ class _DailyPlanScreenState extends State<DailyPlanScreen> {
   bool _loading = true;
   int _completedCount = 0;
 
+  static const List<String> _adviceMessages = [
+    'Incluye más vegetales verdes en tus comidas.',
+    'No olvides tomar suficiente agua durante el día.',
+    'Evita las bebidas azucaradas para reducir calorías.',
+    'Come frutas como snack saludable.',
+    'Prefiere granos integrales en lugar de harinas refinadas.',
+    'Reduce el consumo de sal para cuidar tu presión.',
+    'Agrega proteínas magras como pollo o pescado.',
+    'Planifica tus comidas para evitar tentaciones.',
+    'Mantén porciones moderadas para un equilibrio saludable.',
+    'No te saltes el desayuno, te da energía.',
+    'Elige grasas saludables como las del aguacate.',
+    'Come despacio para mejorar la digestión.',
+    'Incluye legumbres al menos una vez por semana.',
+    'Evita comer tarde en la noche.',
+    'Balancea cada plato con carbohidratos, proteína y vegetales.',
+  ];
+  late String _advice;
+
   late String? userGoal;
 
   @override
@@ -32,6 +51,7 @@ class _DailyPlanScreenState extends State<DailyPlanScreen> {
     super.initState();
     fetchDailyPlan();
     userGoal = Provider.of<UserProvider>(context, listen: false).userGoal;
+    _advice = (_adviceMessages.toList()..shuffle()).first;
   }
 
   Future<void> fetchDailyPlan() async {
@@ -394,6 +414,28 @@ class _DailyPlanScreenState extends State<DailyPlanScreen> {
     },
   ),
 ),
+
+                      const SizedBox(height: 16),
+                      Container(
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Row(
+                          children: [
+                            const Icon(Icons.lightbulb,
+                                color: Color(0xFF226980)),
+                            const SizedBox(width: 8),
+                            Expanded(
+                              child: Text(
+                                _advice,
+                                style: const TextStyle(fontSize: 14),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
 
                     ],
                   ),
