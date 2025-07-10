@@ -15,9 +15,14 @@ import 'package:habits_go_front/screens/daily_plan_screen.dart';
 import 'package:habits_go_front/screens/daily_plan_loading.dart';
 import 'package:habits_go_front/screens/favorite_foods_screen.dart';
 import 'package:habits_go_front/screens/payment_screen.dart';
+import 'package:habits_go_front/screens/habits_questionnaire_screen.dart';
+import 'package:habits_go_front/screens/comment_screen.dart';
+import 'package:habits_go_front/screens/edit_profile_screen.dart';
+import 'package:habits_go_front/services/notification_service.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  NotificationService.initialize();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
   runApp(MultiProvider(
       providers: [
@@ -28,8 +33,32 @@ void main() {
   );
 }
 
-class MainApp extends StatelessWidget {
+class MainApp extends StatefulWidget {
   const MainApp({super.key});
+
+  @override
+  State<MainApp> createState() => _MainAppState();
+}
+
+class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused) {
+      NotificationService.showExitReminder();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,10 +90,13 @@ class MainApp extends StatelessWidget {
           );
         },
         "user_settings": (context) => const UserSettingsScreen(),
+        "habit_questionnaire": (context) => const HabitsQuestionnaireScreen(),
         "daily_plan": (context) => const DailyPlanScreen(),
         "favorite_foods": (context) => const FavoriteFoodsScreen(),
         "payment": (context) => const PaymentScreen(),
         "alerts": (context) => const AlertsScreen(),
+        "comment": (context) => const CommentScreen(),
+        "edit_profile": (context) => const EditProfileScreen(),
         "daily_plan_loading": (context) => const DailyPlanLoadingScreen(),
       }
     );

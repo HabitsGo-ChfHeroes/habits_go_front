@@ -21,8 +21,8 @@ class UserService {
     }
   }
 
-  Future<int> getWeeklyCompletion(int userId) async {
-    final url = Uri.parse('$_baseUrl/$userId/weekly/completion');
+  Future<int> getWeeklyCompletion(int userId, {int weekOffset = 0}) async {
+    final url = Uri.parse('$_baseUrl/$userId/weekly/completion?weekOffset=$weekOffset');
 
     try {
       final response = await http.get(url);
@@ -36,8 +36,8 @@ class UserService {
     }
   }
 
-  Future<String> getMostProductiveDay(int userId) async {
-    final url = Uri.parse('$_baseUrl/$userId/weekly/top/days');
+  Future<String> getMostProductiveDay(int userId, {int weekOffset = 0}) async {
+    final url = Uri.parse('$_baseUrl/$userId/weekly/top/days?weekOffset=$weekOffset');
 
     try {
       final response = await http.get(url);
@@ -51,8 +51,8 @@ class UserService {
     }
   }
 
-  Future<String> getMealsSummary(int userId) async {
-    final url = Uri.parse('$_baseUrl/$userId/meal/completion/summary');
+  Future<String> getMealsSummary(int userId, {int weekOffset = 0}) async {
+    final url = Uri.parse('$_baseUrl/$userId/meal/completion/summary?weekOffset=$weekOffset');
 
     try {
       final response = await http.get(url);
@@ -66,8 +66,8 @@ class UserService {
     }
   }
 
-  Future<List<int>> getWeeklyEvolution(int userId) async {
-    final url = Uri.parse('$_baseUrl/$userId/weekly/evolution');
+  Future<List<int>> getWeeklyEvolution(int userId, {int weekOffset = 0}) async {
+    final url = Uri.parse('$_baseUrl/$userId/weekly/evolution?weekOffset=$weekOffset');
 
     try {
       final response = await http.get(url);
@@ -79,6 +79,28 @@ class UserService {
       }
     } catch (e) {
       throw Exception('Error de conexión: $e');
+    }
+  }
+
+  Future<void> updateUser(
+    int userId, {
+    required String firstName,
+    required String lastName,
+  }) async {
+    final url = Uri.parse('$_baseUrl/$userId');
+    final body = jsonEncode({
+      'first_name': firstName,
+      'last_name': lastName,
+    });
+
+    final response = await http.put(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: body,
+    );
+
+    if (response.statusCode != 200) {
+      throw Exception('Error al actualizar el perfil del usuario.');
     }
   }
 }
