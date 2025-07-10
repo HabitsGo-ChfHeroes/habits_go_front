@@ -199,6 +199,28 @@ class _UserSettingsScreenState extends State<UserSettingsScreen> {
                 ),
               ),
             ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: SizedBox(
+                width: double.infinity,
+                child: ElevatedButton.icon(
+                  onPressed: () => Navigator.pushNamed(context, 'habit_questionnaire'),
+                  icon: const Icon(Icons.assignment),
+                  label: const Text(
+                    'Cambiar H\u00e1bitos',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    backgroundColor: Color(0xFF226980),
+                    foregroundColor: Colors.white,
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),

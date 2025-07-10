@@ -17,6 +17,16 @@ class _ProgressScreenState extends State<ProgressScreen> {
   String mostProductiveDay = '-';
   String mealsSummary = '-';
   List<int> weeklyEvolutionData = [];
+  int weekOffset = 0;
+
+  String get weekRangeLabel {
+    DateTime now = DateTime.now();
+    DateTime monday = now.subtract(Duration(days: now.weekday - 1 + weekOffset * 7));
+    DateTime sunday = monday.add(const Duration(days: 6));
+    String start = '${monday.day}/${monday.month}';
+    String end = '${sunday.day}/${sunday.month}';
+    return 'Semana del $start al $end';
+  }
 
   @override
   void initState() {
@@ -32,10 +42,10 @@ class _ProgressScreenState extends State<ProgressScreen> {
       final userService = UserService();
 
       final results = await Future.wait([
-        userService.getWeeklyCompletion(userId),
-        userService.getMostProductiveDay(userId),
-        userService.getMealsSummary(userId),
-        userService.getWeeklyEvolution(userId)
+        userService.getWeeklyCompletion(userId, weekOffset: weekOffset),
+        userService.getMostProductiveDay(userId, weekOffset: weekOffset),
+        userService.getMealsSummary(userId, weekOffset: weekOffset),
+        userService.getWeeklyEvolution(userId, weekOffset: weekOffset)
       ]);
 
       setState(() {
@@ -88,6 +98,34 @@ class _ProgressScreenState extends State<ProgressScreen> {
               style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 18),
             ),
             SizedBox(height: 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.arrow_back),
+                  onPressed: () {
+                    setState(() {
+                      weekOffset += 1;
+                    });
+                    fetchProgressData();
+                  },
+                ),
+                Text(
+                  weekRangeLabel,
+                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.arrow_forward),
+                  onPressed: weekOffset > 0 ? () {
+                          setState(() {
+                            weekOffset -= 1;
+                          });
+                          fetchProgressData();
+                        } : null,
+                ),
+              ],
+            ),
+            SizedBox(height: 8),
             Expanded(
               child: Container(
                 padding: EdgeInsets.only(top: 24, left: 16, right: 16, bottom: 24),
